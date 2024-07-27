@@ -1,9 +1,14 @@
-let commentButtons = document.querySelectorAll("a.commentButton");
+//
+Action.loadPosts();
 
-for(let commentButton of commentButtons) {
+// COMENTARIOS, REACCIONES
+Action.loadEvents();
 
-    commentButton.addEventListener("click", Action.comment.bind(null));
-}
-
+// PUBLICACIONES
 let createPostButton = document.querySelector("a#createPost");
 createPostButton.addEventListener("click", Action.showModal);
+//
+let sendButton = document.querySelector("button#sendButton");
+let textArea = document.querySelector("textarea#inputPost");
+sendButton.addEventListener("click", Action.post.bind(null, textArea));
+

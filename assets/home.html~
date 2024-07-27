@@ -149,6 +149,7 @@
                 </button>
               </div>
             </div>
+            <!--END Middle Form Section-->
 
 
 
@@ -170,14 +171,17 @@
 	  			</div>
 	  			<div class="modal-body">
 	  				<section class="mb-4">
-							<textarea maxlength="512" id="inputPost" class="form-control" name="" type="text" value="" placeholder="What do you want to talk about?"/></textarea>
+							<textarea maxlength="512" id="description" class="form-control" name="" type="text" value="" placeholder="What do you want to talk about?"/></textarea>
 						</section>
-          </div>
+				</div>
+
+					<section class="row p-2">
+	      				<section class="col" id="answer"></section>
+	      			</section>
 
 					<div class="modal-footer">
         	  <button id="sendButton" type="button" class="btn btn-primary fw-bold">Post</button>
 					</div>
-
 				</div>
 			</div>
 		</div>
@@ -196,16 +200,70 @@
 
 
 
+            <div class="my-3"></div>
 
 
+            <div class="bg-white mb-3 py-2 posts" id="post-1">
+              <div class="d-flex px-3 mb-2 justify-content-between align-items-center">
+                <div class="d-flex align-items-center">
+                  <img class="me-2 post-profile-photo" src="a.png">
+                  <div>
+                    <div class="d-flex">
+                      <a class="me-1 text-decoration-none text-dark fw-bold" href="profile.html">User</a>
+                    </div>
+                  </div>
+                </div>
 
+                <div>
+                  <button class="p-1 px-3 follow-buttons">
+                    Follow
+                  </button>
+                </div>
 
+              </div>
+              <div class="px-3">
+                <p class="main-text">
+                  Content
+                </p>
+              </div>
+              <div>
+                <img src="a.png" class="w-100">
+              </div>
 
+              <div class="d-flex align-items-center border-bottom px-3 p-1 mb-2 justify-content-between">
+                <div class="d-flex align-items-center">
+                  <p class="m-0 small-font-size">
+                    0 Reactions
+                  </p>
+                </div>
 
+                <div class="d-flex justify-content-end text-center">
+                  <p class="m-0 small-font-size">0 Comments</p>
+                </div>
+              </div>
 
+              <div class="d-flex px-3 justify-content-between">
+                  <button type="button" class="interaction-buttons py-2 px-4 d-flex justify-content-center flex-wrap" aria-expanded="false">
+                    <a style="black" class="reactButton dropdown-toggle" data-bs-toggle="dropdown">Like</a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <a class="reactionButton dropdown-item">Like</a>
+                      <a class="reactionButton dropdown-item">Celebrate</a>
+                      <a class="reactionButton dropdown-item">Support</a>
+                      <a class="reactionButton dropdown-item">Love</a>
+                      <a class="reactionButton dropdown-item">Insightful</a>
+                      <a class="reactionButton dropdown-item">Funny</a>
+                    </div>
+                  </button>
+                <button class="interaction-buttons py-2 px-4">
+                  <a class="commentButton text-black">Comment</a>
+                </button>
+                <button class="interaction-buttons py-2 px-4">
+                  <a class="text-black">Repost</a>
+                </button>
+              </div>
+            </div>
 
-          <div id="posts">
-          </div>
+            <div class="bg-white mb-3 py-2 posts">Otro post</div>
 
         </div>
       </div>
@@ -216,11 +274,7 @@
 
 
       <div class="col-3 d-none d-xl-block pe-3 p-0">
-
-
-
-
-
+        <!--START Suggestions Section-->
         <div class="mb-2">
           <div class="card">
             <div class="card-body d-flex justify-content-between align-items-center">
@@ -248,10 +302,7 @@
             </div>
           </div>
         </div>
-
-
-
-
+        <!--END Suggestions Section-->
      </div>
 
 
@@ -277,7 +328,6 @@
 
 
     <script src="js/bootstrap.bundle.min.js"></script>
-    <script src="js/Post.js"></script>
     <script src="js/Action.js"></script>
     <script src="js/main.js"></script>
   </body>
