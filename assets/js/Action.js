@@ -1,4 +1,4 @@
-n = 2;
+n = 0;
 
 class Action {
 
@@ -31,6 +31,9 @@ class Action {
         let posts = document.querySelector("div#posts");
 
         posts.insertBefore(post.getHTML(), posts.children[0]);
+
+	let modal = bootstrap.Modal.getInstance(document.querySelector(`div#createPostModal`));
+	modal.hide();
 
         Action.loadEvents();
     }
@@ -86,7 +89,7 @@ class Action {
 
         for(let i = 0; i < 2; i++) {
 
-            let post = new Post(i, "User", "AAAAAA", "a.png");
+            let post = new Post(n++, "User", "AAAAAA", "a.png");
 
             posts.appendChild(post.getHTML());
         }
