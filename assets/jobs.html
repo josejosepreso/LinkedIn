@@ -51,6 +51,48 @@
         </div>
     </nav>
 
+
+    <main id="jobs" class="py-2 d-flex flex-column align-items-center">
+    </main>
+
+
+
+	  <div class="fs-6 modal-lg modal fade" id="showJobModal" tabindex="-1" aria-hidden="true">
+	  	<div class="modal-dialog">
+	  		<div class="modal-content p-3">
+	  			<div class="modal-header">
+	  				<h1 id="jobTitle" class="modal-title fs-7 fw-bold"></h1>
+        				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	  			</div>
+	  			<div class="modal-body">
+					<div class="d-flex align-items-center">
+						<img class="m-2 job-company-photo" style="border-radius:100px;" src="img/profile.png">
+						<p class="fw-bold">Company</p>
+					</div>
+					<p id="jobLocation" class="small">Tegucigalpa, Francisco Morazan, Honduras · 5 days ago · 21 people clicked Apply</p>
+					<p id="jobModes" class="small">On-site · Full time · Mid-Senior level</p>
+					<p id="jobSkills" class="small"><strong>Skills:</strong> Problem Solving, Inventory Analysis, Java</p>
+	  				<section class="my-4 d-flex flex-column">
+						<p class="h5 fw-bold m-0">About the job</p>
+						<p id="jobDescription" class="my-3 small"></p>
+						<img id="jobImage">
+					</section>
+					<div class="modal-footer">
+        	  				<button id="sendButton" type="button" class="btn btn-primary fw-bold">Apply</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+
+
+
     <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/Job.js"></script>
   </body>
 </html>

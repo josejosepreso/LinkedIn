@@ -1,17 +1,18 @@
 class Post {
 
-    constructor(postId, user, contentText, img) {
+    constructor(postId, user, contentText, img, reactions) {
 
+	this.user = user;
         this.postId = postId;
-        this.user = user;
         this.contentText = contentText;
         this.img = img;
+	this.reactions = reactions;
     }
 
     interactionButtons() {
 
         return `
-            <div class="d-flex px-3 justify-content-between">
+            <div class="d-flex px-3 justify-content-between my-2">
                  <button type="button" class="interaction-buttons py-2 px-4 d-flex justify-content-center flex-wrap" aria-expanded="false">
                    <a style="color:black" class="reactButton dropdown-toggle" data-bs-toggle="dropdown">Like</a>
                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -24,7 +25,7 @@ class Post {
                    </div>
                  </button>
                <button class="interaction-buttons py-2 px-4">
-                 <a class="text-black">Comment</a>
+                 <a class="text-black" style="cursor:pointer;">Comment</a>
                </button>
                <button class="interaction-buttons py-2 px-4">
                  <a class="text-black">Repost</a>
@@ -38,10 +39,10 @@ class Post {
         return `
               <div class="d-flex px-3 mb-2 justify-content-between align-items-center">
                 <div class="d-flex align-items-center">
-                  <img class="me-2 post-profile-photo" src="a.png">
+                  <img class="me-2 post-profile-photo" src="img/${this.user.img}">
                   <div>
                     <div class="d-flex my-3">
-                      <a class="me-1 text-dark fw-bold" href="profile.html">${this.user}</a>
+                      <a class="me-1 text-dark fw-bold" href="profile.html">${this.user.name}</a>
                     </div>
                   </div>
                 </div>
@@ -77,12 +78,12 @@ class Post {
 
                 <div class="d-flex align-items-center">
                   <p class="m-0 small-font-size">
-                    0 Reactions
+                    ${this.reactions} Reactions
                   </p>
                 </div>
 
                 <div class="d-flex justify-content-end text-center">
-                  <p class="m-0 small-font-size">0 Comments</p>
+                  <p class="m-0 small-font-size">3 Comments</p>
                 </div>
 
               </div>
@@ -100,7 +101,7 @@ class Post {
         html.innerHTML += this.footer();
         html.innerHTML += this.interactionButtons();
 
-        let commentButton = html.children[html.children.length-1].children[1];
+        let commentButton = html.children[html.children.length-1].children[1].children[0];
         commentButton.addEventListener("click", Action.comment.bind(null), { once:true });
 
         return html;

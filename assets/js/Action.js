@@ -24,7 +24,7 @@ class Action {
 
         if(textArea.value === "") return;
 
-        let post = new Post(n++, "User1", textArea.value);
+        let post = new Post(n++, new User("Cradily", "profile.png"), textArea.value, undefined, 0);
 
         textArea.value = "";
 
@@ -48,10 +48,10 @@ class Action {
         let img = document.createElement("img");
 
         img.src = "img/profile.png";
-        img.classList.add("profile-photo-comment", "p-3");
+        img.classList.add("profile-photo-comment", "mx-2");
         button.classList.add("btn");
         button.innerText = "Send";
-        html.classList.add("comments", "form-control", "d-flex", "justify-content-center", "align-items-center");
+        html.classList.add("my-2", "comments", "form-control", "d-flex", "justify-content-center", "align-items-center");
         input.classList.add("form-control");
 
         input.placeholder = "Comment";
@@ -60,7 +60,45 @@ class Action {
         html.appendChild(input);
         html.appendChild(button);
 
+	button.addEventListener("click", () => {
+
+		if(input.value != ""){
+
+			let comment = new Comment("User", "profile.png", input.value);
+
+			post.insertBefore(comment.getHTML(), post.children[post.children.length-1]);
+
+			input.value = "";
+		}
+	});
+
+	// LOAD COMMENTS
+	let comments = {
+		1:{
+			user:"Swampert",
+			content:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo",
+			img:"swampert.png"
+		},
+		2:{
+			user:"Beedrill",
+			content:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo",
+			img:"beedrill.png"
+		},
+		3:{
+			user:"Dewgon",
+			content:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo",
+			img:"dewgon.png"
+		}
+	}; 
+        Object.keys(comments).forEach((i) => {
+
+		let commentHTML = new Comment(comments[i].user, comments[i].img, comments[i].content);
+
+		post.appendChild(commentHTML.getHTML());
+	});
+
         post.appendChild(html);
+
     }
 
     static react(e) {
@@ -87,12 +125,17 @@ class Action {
 
         let posts = document.querySelector("div#posts");
 
-        for(let i = 0; i < 2; i++) {
+	posts.appendChild(new Post(n++, new User("Swampert", "swampert.png"), "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", undefined, 1).getHTML());
+	posts.appendChild(new Post(n++, new User("Haunter", "haunter.png"), "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "img/posts/2.jpg", 1).getHTML());
+	posts.appendChild(new Post(n++, new User("Dewgon", "dewgon.png"), "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "img/posts/3.png", 12).getHTML());
+	posts.appendChild(new Post(n++, new User("Beedrill", "beedrill.png"), "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", "img/posts/1.png", 2).getHTML());
 
-            let post = new Post(n++, "User", "AAAAAA", "a.png");
+        // for(let i = 0; i < 2; i++) {
 
-            posts.appendChild(post.getHTML());
-        }
+        //     let post = new Post(n++, "User", "AAAAAA", "a.png");
+
+        //     posts.appendChild(post.getHTML());
+        // }
 
     }
 }
