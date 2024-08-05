@@ -24,7 +24,7 @@ class Action {
 
         if(textArea.value === "") return;
 
-        let post = new Post(n++, new User("Cradily", "profile.png"), textArea.value, undefined, 0);
+        let post = new Post(n++, new User(0, "Cradily", "profile.png"), textArea.value, undefined, 0);
 
         textArea.value = "";
 
