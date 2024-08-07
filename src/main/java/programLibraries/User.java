@@ -13,6 +13,31 @@ public class User {
 		this.img = img;
 	}
 	
+	public int getId() {
+		return this.id;
+	}
+
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getUsername() {
+		return this.username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getImg() {
+		return this.img;
+	}
+
+	public void setImg(String img) {
+		this.img = img;
+	}
+
 	public String toJSON() {
 		
 		return String.format("{\"id\":\"%s\",\"username\":\"%s\",\"img\":\"%s\"}", this.id, this.username, this.img);

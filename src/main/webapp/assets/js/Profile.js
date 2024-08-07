@@ -14,19 +14,23 @@ class Profile {
 			
 			if(this.status == 200) {
 				
-				// console.log(this.responseText);
-				
 				let dto = JSON.parse(this.responseText);
 				
-				// console.log(dto);
 				
-				document.querySelector("h2#userName").innerText = dto.content.username;
-				document.querySelector("img#profile-page-photo").src = `assets/img/${dto.content.img}`;
-			
-				if(dto.content.img == "profile.png") {
+				if(dto.status) {
 					
-					document.querySelector("div#userButtons").remove();
+					document.querySelector("h2#userName").innerText = dto.content.username;
+					document.querySelector("img#profile-page-photo").src = `assets/img/${dto.content.img}`;
+
+					if(dto.content.img == "profile.png") {
+						
+						document.querySelector("div#userButtons").remove();
+					}	
+				} else {
+					
+					console.log(dto);
 				}
+				
 			}
 		}
 	}

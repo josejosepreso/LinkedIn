@@ -45,7 +45,7 @@
                     </div>
                   </a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="profile.jsp">View profile</a>
+                    <a class="dropdown-item" href="profile.jsp?id=0">View profile</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="index.jsp">Sign out</a>
                   </div>

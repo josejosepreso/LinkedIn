@@ -1,7 +1,6 @@
 package programLibraries.controllers;
 
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -31,18 +30,22 @@ public class GetUser extends HttpServlet {
 		
 		response.setHeader("Content-Type", "application/json");
 		
+		if(request.getParameter("id") == null) {
+			
+			WebResponse webResponse = new WebResponse();
+			webResponse.setStatus(false);
+			webResponse.setContent("Error. Usuario no especificado");
+			
+			response.getWriter().append(webResponse.toJSON());
+			
+			return;
+		}
+		
 		String username = "Cradily";
 		String img = "profile.png";
 		int id = 0;
 		
-		if(request.getParameter("id") == null) {
-			
-			User user = new User(id, username, img);
-			
-			response.getWriter().append(String.format("{\"status\":\"true\",\"content\":%s}", user.toJSON()));
-			
-			return;
-		}
+		User user = new User(id, username, img);
 		
 		id = Integer.parseInt(request.getParameter("id"));
 		
@@ -69,13 +72,10 @@ public class GetUser extends HttpServlet {
 			img = "beedrill.png";
 		}
 		
-		User user = new User(id, username, img);
+		user.setId(id);
+		user.setUsername(username);
+		user.setImg(img);
 		
-		// WebResponse webResponse = new WebResponse();
-		// webResponse.setStatus(true);
-		// webResponse.setContent(user.toJSON());
-		
-		// response.getWriter().append(webResponse.toJSON());
 		response.getWriter().append(String.format("{\"status\":\"true\",\"content\":%s}", user.toJSON()));
 	}
 
