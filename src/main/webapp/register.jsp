@@ -22,18 +22,24 @@
       <div class="col-lg-4">
         <div class="p-4 shadow form-input mt-4">
           <label class="fw-bold small">Email</label>
-          <input class="px-3 form-control border-2" type="text">
+          <input id="email" class="px-3 form-control border-2" type="text">
           <label class="fw-bold small mt-3">Password</label>
-          <input class="px-3 form-control border-2" type="password">
+          <input id="password" class="px-3 form-control border-2" type="password">
 	  <p class="my-3 text-secondary" style="text-align:center;font-size:11px;">By clicking Agree & Join or Continue, you agree to the LinkedIn User Agreement, Privacy Policy, and Cookie Policy.</p>
           <div class="mt-4">
-            <a href="home.jsp" type="button" class="form-control btn btn-primary rounded-pill px-2 fw-bold">Agree & Join</a>
+            <a id="sendButton" href="home.jsp" type="button" class="form-control btn btn-primary rounded-pill px-2 fw-bold">Agree & Join</a>
           </div>
         </div>
       </div>
     </div>
 
-
-
+	
+	<script src="assets/js/Register.js"></script>
+	<script>
+		const email = document.querySelector("input#email");
+		const password = document.querySelector("input#password");
+		const sendButton = document.querySelector("a#sendButton");
+		sendButton.addEventListener("click", Register.send.bind(null, email, password));
+	</script>
   </body>
 </html>

@@ -11,4 +11,3 @@ createPostButton.addEventListener("click", Action.showModal);
 let sendButton = document.querySelector("button#sendButton");
 let textArea = document.querySelector("textarea#inputPost");
 sendButton.addEventListener("click", Action.post.bind(null, textArea));
-

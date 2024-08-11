@@ -60,17 +60,17 @@ class Action {
         html.appendChild(input);
         html.appendChild(button);
 
-	button.addEventListener("click", () => {
-
-		if(input.value != ""){
-
-			let comment = new Comment("User", "profile.png", input.value);
-
-			post.insertBefore(comment.getHTML(), post.children[post.children.length-1]);
-
-			input.value = "";
-		}
-	});
+		button.addEventListener("click", () => {
+	
+			if(input.value != ""){
+	
+				let comment = new Comment("User", "profile.png", input.value);
+	
+				post.insertBefore(comment.getHTML(), post.children[post.children.length-1]);
+	
+				input.value = "";
+			}
+		});
 
 	// LOAD COMMENTS
 	let comments = {

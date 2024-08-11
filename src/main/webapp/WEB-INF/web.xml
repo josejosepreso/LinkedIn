@@ -29,4 +29,14 @@
     <servlet-name>GetUser</servlet-name>
     <url-pattern>/controllers/get/user</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>Register</display-name>
+    <servlet-name>Register</servlet-name>
+    <servlet-class>programLibraries.controllers.Register</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>Register</servlet-name>
+    <url-pattern>/controllers/register</url-pattern>
+  </servlet-mapping>
 </web-app>
