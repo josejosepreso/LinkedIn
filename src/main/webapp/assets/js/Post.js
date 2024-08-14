@@ -102,7 +102,7 @@ class Post {
         html.innerHTML += this.interactionButtons();
 
         let commentButton = html.children[html.children.length-1].children[1].children[0];
-        commentButton.addEventListener("click", Action.comment.bind(null), { once:true });
+        commentButton.addEventListener("click", Home.comment.bind(null), { once:true });
 
         return html;
     }

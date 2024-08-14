@@ -8,14 +8,14 @@
     <title>LinkedIn</title>
   </head>
   <body>
-    <nav class="navbar sticky-top">
+    <nav class="navbar ">
         <div class="container">
             <a class="navbar-brand" href="#">
                 <img src="assets/img/logo.png" width="120" height="40" class="d-inline-block">
             </a>
             <ul class="mt-0 navbar justify-content-end navbar-custom">
-            <a href="register.jsp" style="color:black;text-decoration:none;" class="px-3 fw-bold">Join now</a>
-            <a type="button" class="mx-3 px-3 fw-bold btn btn-outline-primary rounded-pill " style="text-decoration:none;" href="login.jsp">Sign In</a>
+            <a href="register.jsp" style="color:black;text-decoration:none;" class="px-3 fw-bold">Unirse ahora</a>
+            <a type="button" class="mx-3 px-3 fw-bold btn btn-outline-primary rounded-pill " style="text-decoration:none;" href="login.jsp">Iniciar sesion</a>
             </ul>
 
         </div>
@@ -24,9 +24,9 @@
     <div class="container mt-5">
         <div class="row">
             <div class=" col-lg-6 col-md-12 content-div">
-                <h1 class="display-4" style="color:#c32100;">Welcome to your professional community.</h1>
+                <h1 class="display-4" style="color:#c32100;">Bienvenido a tu comunidad profesional.</h1>
                 <div style="width:25em;">
-                  <a href="login.jsp" type="button" class="fw-bold form-control mt-3 btn btn-outline-dark rounded-pill button-custom">Sign in with email</a>
+                  <a href="login.jsp" type="button" class="fw-bold form-control mt-3 btn btn-outline-dark rounded-pill button-custom">Iniciar sesion con email</a>
                 </div>
             </div>
             <div class="col-lg-6 col-md-12">

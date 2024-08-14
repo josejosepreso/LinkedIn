@@ -19,7 +19,7 @@ class Comment {
 		let span = document.createElement("span");
 		span.style.width = "80%";
 		span.innerHTML = `
-			<a class="fw-bold text-black" href="profile.jsp">${this.user}</a>
+			<a class="fw-bold text-black" href="profile.jsp?id=this.user">${this.user}</a>
 			<p class="small">${this.content}</p>
 			<p class="small"><a style="cursor:pointer;">Like</a> <a style="cursor:pointer">Reply</a></p>
 		`;

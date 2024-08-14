@@ -295,8 +295,9 @@
     <script src="assets/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/Comment.js"></script>
     <script src="assets/js/User.js"></script>
-    <script src="assets/js/Post.js"></script>
     <script src="assets/js/Action.js"></script>
+    <script src="assets/js/Home.js"></script>
+    <script src="assets/js/Post.js"></script>
     <script src="assets/js/main.js"></script>
   </body>
 </html>
