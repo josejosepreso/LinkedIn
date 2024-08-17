@@ -45,7 +45,7 @@ public class GetUser extends HttpServlet {
 		String img = "profile.png";
 		int id = 0;
 		
-		User user = new User(id, username, img);
+		// User user = new User(id, username, img);
 		
 		id = Integer.parseInt(request.getParameter("id"));
 		
@@ -72,11 +72,7 @@ public class GetUser extends HttpServlet {
 			img = "beedrill.png";
 		}
 		
-		user.setId(id);
-		user.setUsername(username);
-		user.setImg(img);
-		
-		response.getWriter().append(String.format("{\"status\":\"true\",\"content\":%s}", user.toJSON()));
+		// response.getWriter().append(String.format("{\"status\":\"true\",\"content\":%s}", user.toJSON()));
 	}
 
 	/**

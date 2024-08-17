@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	if(session.getAttribute("user") != null) response.sendRedirect("http://localhost:8080/LinkedIn/home.jsp");
+%>
 <!DOCTYPE html>
 <html>
   <head>

@@ -9,7 +9,11 @@ import programLibraries.Validator;
 import programLibraries.WebResponse;
 
 import java.io.IOException;
-import java.sql.*;
+import java.sql.Blob;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 /**
  * Servlet implementation class Register
@@ -68,7 +72,7 @@ public class Register extends HttpServlet {
 			String registrationDate = request.getParameter("registrationDate");
 			Object profilePhoto = request.getParameter("profilePhoto");
 			
-			String query = "INSERT INTO TBL_USUARIOS VALUES(SQ_CODIGO_USUARIO.NEXTVAL,?,?,?,?,?,?,?,?,?,?)";
+			String query = "INSERT INTO TBL_USUARIOS (CODIGO_USUARIO,CORREO,CONTRASENA,NOMBRE,APELLIDO,LUGAR_NACIMIENTO,LUGAR_RESIDENCIA,TELEFONO,FECHA_NACIMIENTO,FECHA_REGISTRO,FOTO_PERFIL,DESCRIPCION) VALUES (SQ_CODIGO_USUARIO.NEXTVAL,?,?,?,?,?,?,?,?,?,?,?)";
 			
 			try {
 				
@@ -103,7 +107,8 @@ public class Register extends HttpServlet {
 				ps.setString(7, phone);
 				ps.setDate(8, java.sql.Date.valueOf(dateB));
 				ps.setDate(9, java.sql.Date.valueOf(registrationDate));
-				ps.setBlob(10, (Blob) null);
+				ps.setBlob(10, (Blob) profilePhoto);
+				ps.setString(11, null);
 				
 				// ResultSet rs = ps.executeQuery();
 				rs = ps.executeQuery();

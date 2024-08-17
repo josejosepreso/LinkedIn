@@ -4,7 +4,9 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import programLibraries.Configuration;
+import programLibraries.User;
 import programLibraries.Validator;
 import programLibraries.WebResponse;
 
@@ -60,11 +62,15 @@ public class Login extends HttpServlet {
 				ps.setString(1, email);
 				ps.setString(2, password);
 				
-				// System.out.println(String.format("%s, %s", email, password));
-				
 				ResultSet rs = ps.executeQuery();
 				
 				if(rs.next()){
+					
+					HttpSession session = request.getSession();
+					
+					User user = new User(rs.getInt("CODIGO_USUARIO"),rs.getString("NOMBRE"),rs.getString("APELLIDO"),rs.getBlob("FOTO_PERFIL"));
+					
+					session.setAttribute("user", user);
 					
 					webResponse.setStatus(true);
 					webResponse.setContent("Inicio de sesion exitoso.");

@@ -1,8 +1,5 @@
 //
-Home.loadPosts();
-
-// COMENTARIOS, REACCIONES
-Home.loadEvents();
+Home.load();
 
 // PUBLICACIONES
 let createPostButton = document.querySelector("a#createPost");

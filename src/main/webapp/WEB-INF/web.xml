@@ -49,4 +49,24 @@
     <servlet-name>Login</servlet-name>
     <url-pattern>/controllers/login</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GetHome</display-name>
+    <servlet-name>GetHome</servlet-name>
+    <servlet-class>programLibraries.controllers.GetHome</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetHome</servlet-name>
+    <url-pattern>/controllers/get/home</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GetComments</display-name>
+    <servlet-name>GetComments</servlet-name>
+    <servlet-class>programLibraries.controllers.GetComments</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetComments</servlet-name>
+    <url-pattern>/controllers/get/comments</url-pattern>
+  </servlet-mapping>
 </web-app>

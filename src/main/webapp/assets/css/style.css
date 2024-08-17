@@ -78,7 +78,7 @@ p {
   background-color: #EBEBEB;
 }
 
-main {
+body#home, body#jobs, body#profile {
 
   background-color: #F3F2EF;
 }

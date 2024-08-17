@@ -1,35 +1,35 @@
 class Post {
 
-    constructor(postId, user, contentText, img, reactions) {
+    constructor(postId, user, contentText, img, reactions, comments, date) {
 
+		this.postId = postId;
 		this.user = user;
-        this.postId = postId;
         this.contentText = contentText;
         this.img = img;
 		this.reactions = reactions;
+		this.comments = comments;
+		this.date = date;
     }
 
     interactionButtons() {
 
         return `
-            <div class="d-flex px-3 justify-content-between my-2">
-                 <button type="button" class="interaction-buttons py-2 px-4 d-flex justify-content-center flex-wrap" aria-expanded="false">
-                   <a style="color:black" class="reactButton dropdown-toggle" data-bs-toggle="dropdown">Like</a>
+            <div class="d-flex px-5 justify-content-between my-1">
+                 <button type="button" class="interaction-buttons py-2  d-flex justify-content-center flex-wrap" aria-expanded="false">
+                   <a style="color:black" class="reactButton dropdown-toggle" data-bs-toggle="dropdown">Recomendar</a>
                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                     <a class="reactionButton dropdown-item">Like</a>
-                     <a class="reactionButton dropdown-item">Celebrate</a>
-                     <a class="reactionButton dropdown-item">Support</a>
-                     <a class="reactionButton dropdown-item">Love</a>
-                     <a class="reactionButton dropdown-item">Insightful</a>
-                     <a class="reactionButton dropdown-item">Funny</a>
+                     <a class="reactionButton dropdown-item">Recomendar</a>
+                     <a class="reactionButton dropdown-item">Celebrar</a>
+                     <a class="reactionButton dropdown-item">Apoyar</a>
+                     <a class="reactionButton dropdown-item">Encantar</a>
+                     <a class="reactionButton dropdown-item">Interesar</a>
+                     <a class="reactionButton dropdown-item">Hacer gracia</a>
                    </div>
                  </button>
-               <button class="interaction-buttons py-2 px-4">
-                 <a class="text-black" style="cursor:pointer;">Comment</a>
+               <button class="interaction-buttons">
+                 <a class="text-black" style="cursor:pointer;">Comentar</a>
                </button>
-               <button class="interaction-buttons py-2 px-4">
-                 <a class="text-black">Repost</a>
-               </button>
+               
             </div>
         `;
     }
@@ -37,23 +37,20 @@ class Post {
     header() {
 
         return `
-              <div class="d-flex px-3 mb-2 justify-content-between align-items-center">
-                <div class="d-flex align-items-center">
-                  <img class="me-2 post-profile-photo" src="assets/img/${this.user.img}">
-                  <div>
-                    <div class="d-flex my-3">
-                      <a class="me-1 text-dark fw-bold" href="profile.jsp?id=${this.user.id}">${this.user.name}</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
+			<div class="px-3 my-2 d-flex justify-content-between align-items-center">
+				<div>
+					<img class="me-2 post-profile-photo" src="assets/img/${this.user.img}">
+					<a class="text-dark fw-bold" href="profile.jsp?id=${this.user.id}">${this.user.name}</a>
+				</div>
+				<small>${this.date}</small>
+			</div>
         `;
     }
 
     content() {
 
         return `
-              <div class="px-3">
+              <div class="px-3 mt-3">
                 <p class="post-content main-text">
                   ${this.contentText}
                 </p>
@@ -78,12 +75,12 @@ class Post {
 
                 <div class="d-flex align-items-center">
                   <p class="m-0 small-font-size">
-                    ${this.reactions} Reactions
+                    ${this.reactions} Reacciones
                   </p>
                 </div>
 
                 <div class="d-flex justify-content-end text-center">
-                  <p class="m-0 small-font-size">3 Comments</p>
+                  <p class="m-0 small-font-size">${this.comments} Comentarios</p>
                 </div>
 
               </div>

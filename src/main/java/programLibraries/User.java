@@ -1,45 +1,41 @@
 package programLibraries;
 
+import java.sql.Blob;
+
 public class User {
 
 	private int id;
-	private String username;
-	private String img;
+	private String fullName;
+	private Blob img;
 	
-	public User(int id, String username, String img) {
+	public User(int id, String name, String lastName, Blob img) {
 		
 		this.id = id;
-		this.username = username;
+		this.fullName = String.format("%s %s", name, lastName);
 		this.img = img;
 	}
-	
-	public int getId() {
-		return this.id;
-	}
 
+	public int getId() {
+		return id;
+	}
 
 	public void setId(int id) {
 		this.id = id;
 	}
 
-	public String getUsername() {
-		return this.username;
+	public String getFullName() {
+		return fullName;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setFullName(String fullName) {
+		this.fullName = fullName;
 	}
 
-	public String getImg() {
-		return this.img;
+	public Blob getImg() {
+		return img;
 	}
 
-	public void setImg(String img) {
+	public void setImg(Blob img) {
 		this.img = img;
-	}
-
-	public String toJSON() {
-		
-		return String.format("{\"id\":\"%s\",\"username\":\"%s\",\"img\":\"%s\"}", this.id, this.username, this.img);
 	}
 }

@@ -9,15 +9,16 @@ class Login {
 		const xhr = new XMLHttpRequest();
 		xhr.open("POST", "controllers/login", true);
 		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		xhr.addEventListener("readystatechange", Login.processResponse.bind(xhr, email, password));
+		xhr.addEventListener("readystatechange", Login.processResponse.bind(xhr));
 		xhr.send(Login.formData(email, password));
 	}
 
-	static processResponse(email, password) {
+	static processResponse() {
 		
 		if(this.readyState == 4) {
 			
 			if(this.status == 200) {
+				
 				
 				let obj = JSON.parse(this.responseText);
 				
@@ -34,6 +35,8 @@ class Login {
 				}
 				
 				answer.innerHTML = `${obj.content}`;
+				
+				if(obj.status) window.location.replace("http://localhost:8080/LinkedIn/home.jsp");
 			} else {
 				
 			}

@@ -35,6 +35,7 @@
   	<script src="assets/js/bootstrap.bundle.min.js"></script>
   	<script src="assets/js/Login.js"></script>
 	<script>
+	
 		const email = document.querySelector("input#email");
 		const password = document.querySelector("input#password");
 		const sendButton = document.querySelector("a#sendButton");
