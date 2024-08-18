@@ -68,7 +68,9 @@ public class Login extends HttpServlet {
 					
 					HttpSession session = request.getSession();
 					
-					User user = new User(rs.getInt("CODIGO_USUARIO"),rs.getString("NOMBRE"),rs.getString("APELLIDO"),rs.getBlob("FOTO_PERFIL"));
+					User user = new User(rs.getInt("CODIGO_USUARIO"),rs.getString("NOMBRE"),rs.getString("APELLIDO"),rs.getBlob("FOTO_PERFIL"),rs.getString("NOMBRE_FOTO_PERFIL"));
+					
+					if(rs.getString("NOMBRE_FOTO_PERFIL") == null) user.setImgPath("profile1.png");
 					
 					session.setAttribute("user", user);
 					

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="programLibraries.User" %>
 <%
 	if(session.getAttribute("user") == null) response.sendRedirect("http://localhost:8080/LinkedIn/index.jsp");
 %>
@@ -74,8 +75,14 @@
                 </div>
                 <div class="px-3" id="userInformation">
                   <h2 id="userName" class="fw-bold"></h2>
-                  <p>Web Developer</p>
-                  <p class="small">Tegucigalpa, Honduras - <a id="contactInfo" style="cursor:pointer;" class="text-primary">Contact info</a></p>
+                  <p id="currentJob">Web Developer</p>
+                  
+                  <div class="d-flex small">
+                  	<p class="me-1" id="currentLocation">Tegucigalpa, Honduras</p>
+                  	-
+                  	<a id="contactInfo" style="cursor:pointer;" class="text-primary fw-bold mx-1">Informacion de contacto</a>
+                  </div>
+                  
                   <p class="small">0 connections</p>
                   <div id="userButtons">
                   	<a type="button" class="fw-bold px-3 btn btn-primary rounded-pill">+ Connect</a>
@@ -102,18 +109,20 @@
 	  	<div class="modal-dialog">
 	  		<div class="modal-content">
 	  			<div class="modal-header">
-	  				<h1 class="modal-title fs-5 fw-bold">Cradily</h1>
+	  				<h1 id="userNameModal" class="modal-title fs-5 fw-bold">Cradily</h1>
         		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	  			</div>
 	  			<div class="modal-body">
 	  				<section class="mb-4">
-              <h5>Contact info</h5>
-						</section>
+              			<h6>Informacion de contacto</h6>
+              			<p id="userEmail" class="small">Correo electronico: </p>
+					</section>
 				</div>
 				</div>
 			</div>
 		</div>
 
+	<div id="myData" style="display:none;" data-user="<%=((User) session.getAttribute("user")).getId()%>"></div>
 
 
     <script src="assets/js/bootstrap.bundle.min.js"></script>

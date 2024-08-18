@@ -48,7 +48,7 @@ public class GetHome extends HttpServlet {
 					"WITH SIGUIENDO AS (SELECT CODIGO_USUARIO_SIGUIENDO FROM TBL_SEGUIDORES WHERE CODIGO_USUARIO_SEGUIDOR=? UNION SELECT ? FROM DUAL),\r\n"
 					+ "REACCIONES AS (SELECT  A.CODIGO_PUBLICACION,COUNT(B.CODIGO_REACCION) AS CANTIDAD_REACCIONES FROM TBL_PUBLICACIONES A,TBL_REACCIONES_POR_PUBLICACION B WHERE A.CODIGO_PUBLICACION = B.CODIGO_PUBLICACION (+) GROUP BY A.CODIGO_PUBLICACION),\r\n"
 					+ "COMENTARIOS AS (SELECT  A.CODIGO_PUBLICACION,COUNT(B.CODIGO_COMENTARIO) AS CANTIDAD_COMENTARIOS FROM TBL_PUBLICACIONES A,TBL_COMENTARIOS B WHERE A.CODIGO_PUBLICACION = B.CODIGO_PUBLICACION (+) GROUP BY A.CODIGO_PUBLICACION)\r\n"
-					+ "SELECT A.CODIGO_PUBLICACION,C.NOMBRE || ' ' || C.APELLIDO AS USUARIO,A.CONTENIDO,A.FECHA_PUBLICACION,D.CANTIDAD_REACCIONES,E.CANTIDAD_COMENTARIOS\r\n"
+					+ "SELECT A.CODIGO_PUBLICACION,B.CODIGO_USUARIO_SIGUIENDO,C.NOMBRE || ' ' || C.APELLIDO AS USUARIO,A.CONTENIDO,A.FECHA_PUBLICACION,D.CANTIDAD_REACCIONES,E.CANTIDAD_COMENTARIOS,C.NOMBRE_FOTO_PERFIL\r\n"
 					+ "FROM TBL_PUBLICACIONES A,SIGUIENDO B,TBL_USUARIOS C,REACCIONES D,COMENTARIOS E\r\n"
 					+ "WHERE A.CODIGO_USUARIO = B.CODIGO_USUARIO_SIGUIENDO\r\n"
 					+ "AND C.CODIGO_USUARIO = A.CODIGO_USUARIO\r\n"
@@ -94,6 +94,11 @@ public class GetHome extends HttpServlet {
 					json.append(String.format("\"%s\"", rs.getInt("CODIGO_PUBLICACION")));
 					json.append(",");
 					
+					json.append("\"CODIGO_USUARIO_SIGUIENDO\"");
+					json.append(":");
+					json.append(String.format("\"%s\"", rs.getInt("CODIGO_USUARIO_SIGUIENDO")));
+					json.append(",");
+					
 					json.append("\"USUARIO\"");
 					json.append(":");
 					json.append(String.format("\"%s\"", rs.getString("USUARIO")));
@@ -117,6 +122,11 @@ public class GetHome extends HttpServlet {
 					json.append("\"CANTIDAD_COMENTARIOS\"");
 					json.append(":");
 					json.append(String.format("\"%s\"", rs.getInt("CANTIDAD_COMENTARIOS")));
+					json.append(",");
+					
+					json.append("\"NOMBRE_FOTO_PERFIL\"");
+					json.append(":");
+					json.append(String.format("\"%s\"", rs.getString("NOMBRE_FOTO_PERFIL")));
 					
 					json.append("}");
 					

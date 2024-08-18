@@ -16,13 +16,24 @@ class Profile {
 				
 				let dto = JSON.parse(this.responseText);
 				
-				
 				if(dto.status) {
 					
-					document.querySelector("h2#userName").innerText = dto.content.username;
-					document.querySelector("img#profile-page-photo").src = `assets/img/${dto.content.img}`;
+					document.querySelector("h2#userName").innerText = dto.content.userInfo.NOMBRE_COMPLETO;
+					document.querySelector("h1#userNameModal").innerText = dto.content.userInfo.NOMBRE_COMPLETO;
+					
+					let userPicture = dto.content.userInfo.NOMBRE_FOTO_PERFIL;
+					if(userPicture === "null") userPicture = "profile1.png";
+					document.querySelector("img#profile-page-photo").src = `assets/img/${userPicture}`;
+					
+					let currentJob = dto.content.userInfo.PUESTO_ACTUAL;
+					if(currentJob === "null") currentJob = "";
+					document.querySelector("p#currentJob").innerText = currentJob;
+					
+					document.querySelector("p#currentLocation").innerText = dto.content.userInfo.LUGAR_RESIDENCIA;
+					
+					document.querySelector("p#userEmail").innerHTML += `<em>${dto.content.userInfo.CORREO}</em>`;
 
-					if(dto.content.img == "profile.png") {
+					if(`${window.location.search.replace("?id=", "")}` == document.querySelector("div#myData").getAttribute("data-user")) {
 						
 						document.querySelector("div#userButtons").remove();
 					}	

@@ -44,7 +44,7 @@
 
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle d-flex align-items-center flex-column" href="#" role="button" data-bs-toggle="dropdown"  aria-haspopup="true" aria-expanded="false" id="navbarDropdown">
-                    <img id="nav-profile-photo" src="assets/img/profile1.png">
+                    <img id="nav-profile-photo" src="assets/img/<%=((User) session.getAttribute("user")).getImgPath()%>">
                     <div class="d-flex">
                       <p class="small m-0">Me</p>
                     </div>
@@ -74,7 +74,7 @@
                 <div class="card">
 
                   <div class="p-3 d-flex justify-content-center">
-                    <img id="currentUserPhoto" class="main-profile-photo" src="assets/img/profile1.png">
+                    <img id="currentUserPhoto" class="main-profile-photo" src="assets/img/<%=((User) session.getAttribute("user")).getImgPath()%>">
                   </div>
 
                   <div class="card-body d-flex flex-column align-items-center">
@@ -124,7 +124,7 @@
 
             <div class="bg-white mt-1 mt-lg-0 px-3 py-2 start-a-post">
               <div class="d-flex align-items-center mb-2">
-                <img class="me-3" id="middle-profile-photo" src="assets/img/profile1.png" alt="profile photo">
+                <img class="me-3" id="middle-profile-photo" src="assets/img/<%=((User) session.getAttribute("user")).getImgPath()%>" alt="profile photo">
 
                 <a id="createPost" style="border-radius:30px;cursor:pointer;" class="form-control p-2 ps-3 fw-bold">Crear publicacion</a>
 
@@ -293,7 +293,7 @@
 
 
 
-	<div id="myData" style="display:none;" data-user-name="<%=((User) session.getAttribute("user")).getFullName()%>"></div>
+	<div id="myData" style="display:none;" data-user-picture="<%=((User) session.getAttribute("user")).getImgPath()%>" data-user-name="<%=((User) session.getAttribute("user")).getFullName()%>"></div>
 
 
     <script src="assets/js/bootstrap.bundle.min.js"></script>

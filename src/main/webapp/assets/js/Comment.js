@@ -14,7 +14,7 @@ class Comment {
 
 		let img = document.createElement("img");
 		img.src = `assets/img/${this.img}`;
-        	img.classList.add("profile-photo-comment", "me-3");
+        img.classList.add("profile-photo-comment", "me-3");
 
 		let span = document.createElement("span");
 		span.style.width = "80%";

@@ -38,7 +38,8 @@ class Home {
         let button = document.createElement("a");
         let img = document.createElement("img");
 
-        img.src = "assets/img/profile1.png";
+		let userPicture = document.querySelector("div#myData").getAttribute("data-user-picture");
+        img.src = `assets/img/${userPicture}`;
         img.classList.add("profile-photo-comment", "mx-2");
         button.classList.add("btn");
         button.innerText = "Send";
@@ -59,7 +60,7 @@ class Home {
 				
 				// console.log(name);
 	
-				let comment = new Comment(name, "profile1.png", input.value);
+				let comment = new Comment(name, userPicture, input.value);
 	
 				post.insertBefore(comment.getHTML(), post.children[5]);
 	
@@ -89,11 +90,11 @@ class Home {
 				
 				let comments = JSON.parse(this.responseText).content;
 				
-				// console.log(comments);
+				console.log(comments);
 				
 			    Object.keys(comments).forEach((i) => {
 					
-					if(comments[i].FOTO_PERFIL == "null") {
+					if(comments[i].FOTO_PERFIL === "null") {
 						
 						comments[i].FOTO_PERFIL = "profile1.png";
 					}
@@ -150,7 +151,7 @@ class Home {
 				
 				const posts = obj.content.posts;
 				
-				// console.log(obj);
+				console.log(obj);
 				
 				if(obj.status) {
 					
@@ -160,9 +161,12 @@ class Home {
 					
 					Object.keys(posts).forEach((i) => {
 						
+						let userPicture = posts[i].NOMBRE_FOTO_PERFIL;
+						if(posts[i].NOMBRE_FOTO_PERFIL === "null") userPicture = "profile1.png";
+						
 						post = new Post(
 							posts[i].CODIGO_PUBLICACION,
-							new User(0, posts[i].USUARIO, "profile1.png"),
+							new User(posts[i].CODIGO_USUARIO_SIGUIENDO, posts[i].USUARIO, userPicture),
 							posts[i].CONTENIDO,
 							undefined,
 							posts[i].CANTIDAD_REACCIONES,

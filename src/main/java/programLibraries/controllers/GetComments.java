@@ -45,9 +45,9 @@ public class GetComments extends HttpServlet {
 		if(postId != null) {
 			
 			String query =
-					"SELECT CODIGO_COMENTARIO,CODIGO_COMENTARIO_SUPERIOR,NOMBRE_USUARIO,CONTENIDO,FOTO_PERFIL\r\n"
+					"SELECT CODIGO_COMENTARIO,CODIGO_COMENTARIO_SUPERIOR,NOMBRE_USUARIO,CONTENIDO,NOMBRE_FOTO_PERFIL\r\n"
 					+ "FROM\r\n"
-					+ "(SELECT A.CODIGO_COMENTARIO,A.CODIGO_COMENTARIO_SUPERIOR,A.CODIGO_PUBLICACION,B.NOMBRE || ' ' || B.APELLIDO AS NOMBRE_USUARIO,A.CONTENIDO,B.FOTO_PERFIL\r\n"
+					+ "(SELECT A.CODIGO_COMENTARIO,A.CODIGO_COMENTARIO_SUPERIOR,A.CODIGO_PUBLICACION,B.NOMBRE || ' ' || B.APELLIDO AS NOMBRE_USUARIO,A.CONTENIDO,B.NOMBRE_FOTO_PERFIL\r\n"
 					+ "FROM TBL_COMENTARIOS A INNER JOIN TBL_USUARIOS B ON (A.CODIGO_USUARIO = B.CODIGO_USUARIO))\r\n"
 					+ "WHERE CODIGO_PUBLICACION = ?";
 			
@@ -94,7 +94,7 @@ public class GetComments extends HttpServlet {
 					
 					json.append("\"FOTO_PERFIL\"");
 					json.append(":");
-					json.append(String.format("\"%s\"", rs.getBlob("FOTO_PERFIL")));
+					json.append(String.format("\"%s\"", rs.getString("NOMBRE_FOTO_PERFIL")));
 					
 					json.append("}");
 					
