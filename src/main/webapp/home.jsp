@@ -219,53 +219,11 @@
 
 
         <div class="mb-2">
-          <div class="card">
+          <div class="card" id="addToFeed">
             <div class="card-body d-flex justify-content-between align-items-center">
               <h6 class="fw-bold card-title m-0">Añadir a tu feed</h6>
             </div>
-            <div class="card-body pt-0">
-
-              <div class="d-flex mb-3">
-		<img class="suggestions-logo me-3" src="assets/img/cacturne.png">
-                <div>
-                  <a href="#" class="text-decoration-none">
-                    <span class="suggestions-name">
-                      Cacturne
-                    </span>
-                  </a>
-
-                  <p class="mb-2 small">Lorem ipsum dolor sit amet, consectetur</p>
-
-                  <button class="p-1 bg-white suggestions-buttons">
-                    Seguir
-                  </button>
-
-                </div>
-              </div>
-
-
-
-              <div class="d-flex mb-3">
-		<img class="suggestions-logo me-3" src="assets/img/swampert.png">
-                <div>
-                  <a href="#" class="text-decoration-none">
-                    <span class="suggestions-name">
-                      Swampert
-                    </span>
-                  </a>
-
-                  <p class="mb-2 small">Lorem ipsum dolor sit amet, consectetur</p>
-
-                  <button class="p-1 bg-white suggestions-buttons">
-                    Seguir
-                  </button>
-
-                </div>
-              </div>
-
-
-
-            </div>
+            
           </div>
         </div>
 

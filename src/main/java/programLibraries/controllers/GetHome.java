@@ -65,6 +65,27 @@ public class GetHome extends HttpServlet {
 					+ "AND B.CODIGO_EMPRESA = A.CODIGO_EMPRESA\r\n"
 					+ "AND CODIGO_USUARIO = ?";
 			
+			// Obtener usuarios no seguidos
+			String query2 =
+					"WITH NO_SIGUIENDO AS (\r\n"
+					+ "    SELECT CODIGO_USUARIO\r\n"
+					+ "    FROM (\r\n"
+					+ "        SELECT CODIGO_USUARIO_SIGUIENDO\r\n"
+					+ "        FROM TBL_SEGUIDORES\r\n"
+					+ "        WHERE CODIGO_USUARIO_SEGUIDOR = ?\r\n"
+					+ "    ) A\r\n"
+					+ "    RIGHT JOIN TBL_USUARIOS B\r\n"
+					+ "    ON (A.CODIGO_USUARIO_SIGUIENDO = B.CODIGO_USUARIO)\r\n"
+					+ "    WHERE A.CODIGO_USUARIO_SIGUIENDO IS NULL\r\n"
+					+ "    AND CODIGO_USUARIO <> ?\r\n"
+					+ ")\r\n"
+					+ "SELECT  A.NOMBRE || ' ' || A.APELLIDO AS NOMBRE_USUARIO,\r\n"
+					+ "        A.DESCRIPCION,\r\n"
+					+ "        A.NOMBRE_FOTO_PERFIL\r\n"
+					+ "FROM TBL_USUARIOS A\r\n"
+					+ "INNER JOIN NO_SIGUIENDO B\r\n"
+					+ "ON (A.CODIGO_USUARIO = B.CODIGO_USUARIO)";
+			
 			try {
 				
 				Connection connection = DriverManager.getConnection(Configuration.DATABASE_URL,Configuration.DATABASE_USERNAME,Configuration.DATABASE_PASSWORD);
@@ -138,6 +159,7 @@ public class GetHome extends HttpServlet {
 				
 				json.append("}}");
 				
+				// PUESTO ACTUAL
 				ps = connection.prepareStatement(query1);
 				ps.setInt(1, (int) ((User) user).getId());
 				rs = ps.executeQuery();
@@ -154,6 +176,47 @@ public class GetHome extends HttpServlet {
 					
 					json.append("null");
 				}
+				
+				json.append(",");
+				
+				// USUARIOS NO SEGUIDOS
+				ps = connection.prepareStatement(query2,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
+				ps.setInt(1, (int) ((User) user).getId());
+				ps.setInt(2, (int) ((User) user).getId());
+				rs = ps.executeQuery();
+				
+				json.append("\"USUARIOS_NO_SEGUIDOS\"");
+				json.append(":");
+				json.append("{");
+				
+				i = 1;
+				
+				while(rs.next()){
+					
+					json.append(String.format("\"%s\"", i++));
+					json.append(":");
+					json.append("{");
+					
+					json.append("\"NOMBRE_USUARIO\"");
+					json.append(":");
+					json.append(String.format("\"%s\"", rs.getString("NOMBRE_USUARIO")));
+					json.append(",");
+					
+					json.append("\"DESCRIPCION\"");
+					json.append(":");
+					json.append(String.format("\"%s\"", rs.getString("DESCRIPCION")));
+					json.append(",");
+					
+					json.append("\"NOMBRE_FOTO_PERFIL\"");
+					json.append(":");
+					json.append(String.format("\"%s\"", rs.getString("NOMBRE_FOTO_PERFIL")));
+					
+					json.append("}");
+					
+					if(!rs.isLast()) json.append(",");
+				}
+				
+				json.append("}");
 				
 				response.getWriter().append(String.format("{\"status\":\"true\",\"content\":%s}", json.toString()));
 				

@@ -180,8 +180,53 @@ class Home {
 					Home.loadEvents();
 					
 					if(obj.PUESTO_ACTUAL != null) document.querySelector("p#currentUserJob").innerText = `${obj.PUESTO_ACTUAL}`;
+					
+					//
+					const users = obj.USUARIOS_NO_SEGUIDOS;
+					const addToFeed = document.querySelector("div#addToFeed");
+					if(users) {
+						
+						Object.keys(users).forEach((i) => {
+							
+							let img = users[i].NOMBRE_FOTO_PERFIL;
+							if(img === "null") img = "profile1.png";
+							
+							let description = users[i].DESCRIPCION;
+							if(description === "null") description = "";
+							
+							addToFeed.appendChild(Home.userCard(users[i].NOMBRE_USUARIO,description,img));
+						});
+					}
 				}
 			}
 		}
+	}
+	
+	static userCard(name, description, img) {
+		
+		let div = document.createElement("div");
+		div.classList.add("card-body","pt-0");
+		
+		
+		div.innerHTML =
+			`<div class="d-flex mb-3">
+				<img class="suggestions-logo me-3" src="assets/img/${img}">
+			    <div>
+			      <a href="#" class="text-decoration-none">
+			        <span class="suggestions-name">
+			          ${name}
+			        </span>
+			      </a>
+			
+			      <p class="mb-2 small">${description}</p>
+			
+			      <button class="p-1 bg-white suggestions-buttons">
+			        Seguir
+			      </button>
+			
+			    </div>
+			  </div>`;
+						
+		return div;
 	}
 }
