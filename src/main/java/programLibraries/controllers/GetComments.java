@@ -44,6 +44,7 @@ public class GetComments extends HttpServlet {
 		
 		if(postId != null) {
 			
+			// Obtener comentarios de una publicacion
 			String query =
 					"SELECT CODIGO_COMENTARIO,CODIGO_COMENTARIO_SUPERIOR,NOMBRE_USUARIO,CONTENIDO,NOMBRE_FOTO_PERFIL\r\n"
 					+ "FROM\r\n"

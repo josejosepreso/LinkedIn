@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="programLibraries.User" %>
 <%
 	if(session.getAttribute("user") == null) response.sendRedirect("http://localhost:8080/LinkedIn/index.jsp");
 %>
@@ -47,7 +48,7 @@
                     </div>
                   </a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="profile.jsp?id=0">View profile</a>
+                    <a class="dropdown-item" href="profile.jsp?id=<%=((User) session.getAttribute("user")).getId()%>">View profile</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="signout.jsp">Sign out</a>
                   </div>
@@ -71,19 +72,23 @@
 	  			</div>
 	  			<div class="modal-body">
 					<div class="d-flex align-items-center">
-						<img class="m-2 job-company-photo" style="border-radius:100px;" src="assets/img/profile1.png">
-						<p class="fw-bold">Company</p>
+						<img class="me-2 job-company-photo" style="border-radius:100px;" src="assets/img/profile1.png">
+						<p id="company" class="fw-bold"></p>
 					</div>
-					<p id="jobLocation" class="small">Tegucigalpa, Francisco Morazan, Honduras · 5 days ago · 21 people clicked Apply</p>
-					<p id="jobModes" class="small">On-site · Full time · Mid-Senior level</p>
-					<p id="jobSkills" class="small"><strong>Skills:</strong> Problem Solving, Inventory Analysis, Java</p>
+					<p id="information" class="small mt-2"></p>
+					
+					<div class="d-flex">
+						<strong class="small me-2">Modalidad:</strong><p id="type" class="small"></p>
+					</div>
+					
+					<p class="small"><strong>Habilidades:</strong><p id="skillsList"></p></p>
 	  				<section class="my-4 d-flex flex-column">
-						<p class="h5 fw-bold m-0">About the job</p>
-						<p id="jobDescription" class="my-3 small"></p>
+						<p class="h5 fw-bold m-0">Acerca del puesto</p>
+						<p id="jobDescription" class="mb-3 small"></p>
 						<img id="jobImage">
 					</section>
 					<div class="modal-footer">
-        	  				<button id="sendButton" type="button" class="btn btn-primary fw-bold">Apply</button>
+        	  				<button id="sendButton" type="button" class="btn btn-primary fw-bold">Aplicar</button>
 					</div>
 				</div>
 			</div>

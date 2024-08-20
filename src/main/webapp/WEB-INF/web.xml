@@ -69,4 +69,14 @@
     <servlet-name>GetComments</servlet-name>
     <url-pattern>/controllers/get/comments</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GetJobs</display-name>
+    <servlet-name>GetJobs</servlet-name>
+    <servlet-class>programLibraries.controllers.GetJobs</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetJobs</servlet-name>
+    <url-pattern>/controllers/get/jobs</url-pattern>
+  </servlet-mapping>
 </web-app>

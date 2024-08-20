@@ -22,8 +22,8 @@
          <div class="p-4 shadow form-input mt-4">
            <h2><b>Iniciar sesion</b></h2>
            <p class="small">Mantente actualizado en tu entorno profesional</p>
-           <input id="email" class="p-3 form-control border-2 mt-4" type="text" placeholder="Correo electronico">
-           <input id="password" class="p-3 form-control border-2 mt-3" type="password" placeholder="Contrasena">
+           <input id="email" value="josehihat@gmail.com" class="p-3 form-control border-2 mt-4" type="text" placeholder="Correo electronico">
+           <input id="password" value="contra" class="p-3 form-control border-2 mt-3" type="password" placeholder="Contrasena">
            <div class="mt-4">
              <a id="sendButton" type="button" class="form-control btn btn-primary rounded-pill px-2 fw-bold">Iniciar sesion</a>
            </div>

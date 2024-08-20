@@ -44,6 +44,7 @@ public class GetHome extends HttpServlet {
 		
 		if(user != null) {
 			
+			// Obtener publicaciones en base a usuarios seguidos
 			String query =
 					"WITH SIGUIENDO AS (SELECT CODIGO_USUARIO_SIGUIENDO FROM TBL_SEGUIDORES WHERE CODIGO_USUARIO_SEGUIDOR=? UNION SELECT ? FROM DUAL),\r\n"
 					+ "REACCIONES AS (SELECT  A.CODIGO_PUBLICACION,COUNT(B.CODIGO_REACCION) AS CANTIDAD_REACCIONES FROM TBL_PUBLICACIONES A,TBL_REACCIONES_POR_PUBLICACION B WHERE A.CODIGO_PUBLICACION = B.CODIGO_PUBLICACION (+) GROUP BY A.CODIGO_PUBLICACION),\r\n"
@@ -56,6 +57,7 @@ public class GetHome extends HttpServlet {
 					+ "AND E.CODIGO_PUBLICACION = A.CODIGO_PUBLICACION\r\n"
 					+ "ORDER BY FECHA_PUBLICACION DESC";
 
+			// Obtener puesto laboral actual en pagina de inicio
 			String query1 =
 					"SELECT  A.PUESTO || ' en ' || B.NOMBRE AS PUESTO_ACTUAL\r\n"
 					+ "FROM TBL_EXPERIENCIAS_LABORALES A,TBL_EMPRESAS B\r\n"

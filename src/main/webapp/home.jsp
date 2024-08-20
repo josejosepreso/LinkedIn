@@ -50,7 +50,7 @@
                     </div>
                   </a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="profile.jsp?id=0">View profile</a>
+                    <a class="dropdown-item" href="profile.jsp?id=<%=((User) session.getAttribute("user")).getId() %>">View profile</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="signout.jsp">Sign out</a>
                   </div>

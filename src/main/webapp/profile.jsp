@@ -49,7 +49,7 @@
                     </div>
                   </a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="profile.jsp?id=0">View profile</a>
+                    <a class="dropdown-item" href="profile.jsp?id=<%=((User) session.getAttribute("user")).getId()%>">View profile</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="signout.jsp">Sign out</a>
                   </div>
@@ -75,18 +75,18 @@
                 </div>
                 <div class="px-3" id="userInformation">
                   <h2 id="userName" class="fw-bold"></h2>
-                  <p id="currentJob">Web Developer</p>
+                  <p id="currentJob"></p>
                   
                   <div class="d-flex small">
-                  	<p class="me-1" id="currentLocation">Tegucigalpa, Honduras</p>
+                  	<p class="me-1" id="currentLocation"></p>
                   	-
                   	<a id="contactInfo" style="cursor:pointer;" class="text-primary fw-bold mx-1">Informacion de contacto</a>
                   </div>
                   
-                  <p class="small">0 connections</p>
+                  <p class="small">0 conexiones</p>
                   <div id="userButtons">
-                  	<a type="button" class="fw-bold px-3 btn btn-primary rounded-pill">+ Connect</a>
-                  	<a style="border:1px solid #0d6efd;color:#0d6efd;" type="button" class="fw-bold px-3 btn bg-white rounded-pill">Message</a>
+                  	<a type="button" class="fw-bold px-3 btn btn-primary rounded-pill">+ Conectar</a>
+                  	<a style="border:1px solid #0d6efd;color:#0d6efd;" type="button" class="fw-bold px-3 btn bg-white rounded-pill">Mensaje</a>
                   </div>
                 </div>
               </div>
@@ -109,13 +109,14 @@
 	  	<div class="modal-dialog">
 	  		<div class="modal-content">
 	  			<div class="modal-header">
-	  				<h1 id="userNameModal" class="modal-title fs-5 fw-bold">Cradily</h1>
+	  				<h1 id="userNameModal" class="modal-title fs-5 fw-bold"></h1>
         		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	  			</div>
 	  			<div class="modal-body">
 	  				<section class="mb-4">
               			<h6>Informacion de contacto</h6>
-              			<p id="userEmail" class="small">Correo electronico: </p>
+              			<p id="userEmail" class="small my-0">Correo electronico: </p>
+              			<p id="userPhone" class="small my-0">Telefono: </p>
 					</section>
 				</div>
 				</div>
