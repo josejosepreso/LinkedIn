@@ -70,9 +70,9 @@ public class Register extends HttpServlet {
 			String phone = request.getParameter("phone");
 			String dateB = request.getParameter("dateB");
 			String registrationDate = request.getParameter("registrationDate");
-			Object profilePhoto = request.getParameter("profilePhoto");
+			// Object profilePhoto = (Object) request.getParameter("profilePhoto");
 			
-			String query = "INSERT INTO TBL_USUARIOS (CODIGO_USUARIO,CORREO,CONTRASENA,NOMBRE,APELLIDO,LUGAR_NACIMIENTO,LUGAR_RESIDENCIA,TELEFONO,FECHA_NACIMIENTO,FECHA_REGISTRO,FOTO_PERFIL,DESCRIPCION) VALUES (SQ_CODIGO_USUARIO.NEXTVAL,?,?,?,?,?,?,?,?,?,?,?)";
+			String query = "INSERT INTO TBL_USUARIOS (CODIGO_USUARIO,CORREO,CONTRASENA,NOMBRE,APELLIDO,LUGAR_NACIMIENTO,LUGAR_RESIDENCIA,TELEFONO,FECHA_NACIMIENTO,FECHA_REGISTRO,FOTO_PERFIL,DESCRIPCION,NOMBRE_FOTO_PERFIL) VALUES (SQ_CODIGO_USUARIO.NEXTVAL,?,?,?,?,?,?,?,?,?,?,?,?)";
 			
 			try {
 				
@@ -107,8 +107,9 @@ public class Register extends HttpServlet {
 				ps.setString(7, phone);
 				ps.setDate(8, java.sql.Date.valueOf(dateB));
 				ps.setDate(9, java.sql.Date.valueOf(registrationDate));
-				ps.setBlob(10, (Blob) profilePhoto);
+				ps.setBlob(10, (Blob) null);
 				ps.setString(11, null);
+				ps.setString(12, null);
 				
 				// ResultSet rs = ps.executeQuery();
 				rs = ps.executeQuery();

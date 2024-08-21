@@ -1,7 +1,9 @@
 class Comment {
 
-	constructor(user, img, content) {
+	constructor(id, sup_id, user, img, content) {
 
+		this.id = id;
+		this.sup_id = sup_id;
 		this.user = user;
 		this.img = img;
 		this.content = content;
@@ -10,7 +12,10 @@ class Comment {
 	getHTML() {
 
 		let html = document.createElement("div");
-		html.classList.add("form-control", "d-flex");
+		html.classList.add("form-control", "px-4");
+		
+		html.id = 'comment-' + this.id;
+		html.dataset.sup_id = this.sup_id;
 
 		let img = document.createElement("img");
 		img.src = `assets/img/${this.img}`;

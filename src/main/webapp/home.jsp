@@ -167,7 +167,7 @@
 	  			</div>
 	  			<div class="modal-body">
 	  				<section class="mb-4">
-							<textarea maxlength="512" id="inputPost" class="form-control" name="" type="text" value="" placeholder="What do you want to talk about?"/></textarea>
+							<textarea maxlength="100" id="inputPost" class="form-control" name="" type="text" value="" placeholder="What do you want to talk about?"/></textarea>
 						</section>
           </div>
 
@@ -251,7 +251,7 @@
 
 
 
-	<div id="myData" style="display:none;" data-user-picture="<%=((User) session.getAttribute("user")).getImgPath()%>" data-user-name="<%=((User) session.getAttribute("user")).getFullName()%>"></div>
+	<div id="myData" style="display:none;" data-user-picture="<%=((User) session.getAttribute("user")).getImgPath()%>" data-user-name="<%=((User) session.getAttribute("user")).getFullName()%>" data-user-id="<%=((User) session.getAttribute("user")).getId()%>"></div>
 
 
     <script src="assets/js/bootstrap.bundle.min.js"></script>

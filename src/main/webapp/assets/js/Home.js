@@ -1,5 +1,3 @@
-n = 0;
-
 class Home {
 
     static loadEvents() {
@@ -11,23 +9,45 @@ class Home {
         }
     }
 
-    static post(textArea) {
-
-        if(textArea.value === "") return;
-
-        let post = new Post(n++, new User(0, "Cradily", "profile.png"), textArea.value, undefined, 0);
-
-        textArea.value = "";
-
-        let posts = document.querySelector("div#posts");
-
-        posts.insertBefore(post.getHTML(), posts.children[0]);
-
-		let modal = bootstrap.Modal.getInstance(document.querySelector(`div#createPostModal`));
-		modal.hide();
-
-        Home.loadEvents();
+    static processPostResponse(textArea,date) {
+		
+		if(this.readyState == 4) {
+					
+			if(this.status == 200) {
+				
+				let obj = JSON.parse(this.responseText);
+				
+				const userPhoto = document.querySelector("div#myData").getAttribute("data-user-picture");
+				const userName = document.querySelector("div#myData").getAttribute("data-user-name");
+				const userId = document.querySelector("div#myData").getAttribute("data-user-id");
+		        let post = new Post(obj.content.CODIGO_PUBLICACION, new User(userId, userName, userPhoto), textArea.value, undefined, 0, 0,date);
+		
+		        textArea.value = "";
+		
+		        let posts = document.querySelector("div#posts");
+		
+		        posts.insertBefore(post.getHTML(), posts.children[0]);
+		
+				let modal = bootstrap.Modal.getInstance(document.querySelector(`div#createPostModal`));
+				modal.hide();
+		
+		        Home.loadEvents();
+			}
+		}
     }
+	
+	static send(textArea) {
+		
+		if(textArea.value === "") return;
+		
+		let now = new Date().toISOString().slice(0, 10);
+		
+		const xhr = new XMLHttpRequest();
+		xhr.open("POST", "controllers/create/post", true);
+		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		xhr.addEventListener("readystatechange", Home.processPostResponse.bind(xhr,textArea,now));
+		xhr.send(`content=${textArea.value}&date=${now}`);
+	}
 
     static comment(e) {
 
@@ -90,7 +110,7 @@ class Home {
 				
 				let comments = JSON.parse(this.responseText).content;
 				
-				console.log(comments);
+				// console.log(comments);
 				
 			    Object.keys(comments).forEach((i) => {
 					
@@ -100,16 +120,37 @@ class Home {
 					}
 
 					let commentHTML = new Comment(
+											comments[i].CODIGO_COMENTARIO,
+											comments[i].CODIGO_COMENTARIO_SUPERIOR,
 											comments[i].NOMBRE_USUARIO,
 											comments[i].FOTO_PERFIL,
 											comments[i].CONTENIDO
 									);
-
-					post.appendChild(commentHTML.getHTML());
+									
+					if(comments[i].CODIGO_COMENTARIO_SUPERIOR === "0") {
+						
+						post.appendChild(commentHTML.getHTML());
+					} else {
+						
+						document.querySelector(`div#comment-${comments[i].CODIGO_COMENTARIO_SUPERIOR}`).appendChild(commentHTML.getHTML());
+					}
 				});
 			}
 		}
-	}		
+	}
+	
+	static setReaction(post, reaction) {
+		
+		if(reaction === "null") return;
+		
+		const a = post.children[post.children.length-1].children[0].children[0];
+		
+		if(a.innerText === "Celebrar") a.style.color = "#198754";
+        else if(a.innerText === "Apoyar") a.style.color = "#6f42c1";
+        else if(a.innerText === "Encantar") a.style.color = "#dc3545";
+        else if(a.innerText === "Interesar") a.style.color = "#ffc107";
+        else if(a.innerText === "Hacer gracia") a.style.color = "#0dcaf0";
+	}
 
 
     static react(e) {
@@ -151,7 +192,7 @@ class Home {
 				
 				const posts = obj.content.posts;
 				
-				console.log(obj);
+				// console.log(obj);
 				
 				if(obj.status) {
 					
@@ -171,7 +212,8 @@ class Home {
 							undefined,
 							posts[i].CANTIDAD_REACCIONES,
 							posts[i].CANTIDAD_COMENTARIOS,
-							posts[i].FECHA_PUBLICACION
+							posts[i].FECHA_PUBLICACION,
+							posts[i].REACCION
 						).getHTML();
 					
 						postsSection.appendChild(post);
@@ -194,7 +236,7 @@ class Home {
 							let description = users[i].DESCRIPCION;
 							if(description === "null") description = "";
 							
-							addToFeed.appendChild(Home.userCard(users[i].NOMBRE_USUARIO,description,img));
+							addToFeed.appendChild(Home.userCard(users[i].CODIGO_USUARIO,users[i].NOMBRE_USUARIO,description,img));
 						});
 					}
 				}
@@ -202,7 +244,7 @@ class Home {
 		}
 	}
 	
-	static userCard(name, description, img) {
+	static userCard(userId, name, description, img) {
 		
 		let div = document.createElement("div");
 		div.classList.add("card-body","pt-0");
@@ -212,7 +254,7 @@ class Home {
 			`<div class="d-flex mb-3">
 				<img class="suggestions-logo me-3" src="assets/img/${img}">
 			    <div>
-			      <a href="#" class="text-decoration-none">
+			      <a href="profile.jsp?id=${userId}" class="text-decoration-none">
 			        <span class="suggestions-name">
 			          ${name}
 			        </span>

@@ -79,4 +79,14 @@
     <servlet-name>GetJobs</servlet-name>
     <url-pattern>/controllers/get/jobs</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>CreatePost</display-name>
+    <servlet-name>CreatePost</servlet-name>
+    <servlet-class>programLibraries.controllers.CreatePost</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CreatePost</servlet-name>
+    <url-pattern>/controllers/create/post</url-pattern>
+  </servlet-mapping>
 </web-app>

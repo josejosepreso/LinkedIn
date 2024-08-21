@@ -1,6 +1,6 @@
 class Post {
 
-    constructor(postId, user, contentText, img, reactions, comments, date) {
+    constructor(postId, user, contentText, img, reactions, comments, date, reacted) {
 
 		this.postId = postId;
 		this.user = user;
@@ -9,6 +9,7 @@ class Post {
 		this.reactions = reactions;
 		this.comments = comments;
 		this.date = date;
+		this.reacted = reacted;
     }
 
     interactionButtons() {
@@ -16,7 +17,7 @@ class Post {
         return `
             <div class="d-flex px-5 justify-content-between my-1">
                  <button type="button" class="interaction-buttons py-2  d-flex justify-content-center flex-wrap" aria-expanded="false">
-                   <a style="color:black" class="reactButton dropdown-toggle" data-bs-toggle="dropdown">Recomendar</a>
+                   <a style="color:black" class="reactButton dropdown-toggle" data-bs-toggle="dropdown">${this.reacted === "null" ? "Recomendar" : this.reacted}</a>
                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                      <a class="reactionButton dropdown-item">Recomendar</a>
                      <a class="reactionButton dropdown-item">Celebrar</a>
@@ -91,7 +92,7 @@ class Post {
 
         let html = document.createElement("div");
         html.classList.add("bg-white", "my-3", "py-2", "posts");
-        html.id = "post-" + this.postId;
+        html.id = 'post-' + this.postId;
 
         html.innerHTML += this.header();
         html.innerHTML += this.content();
@@ -100,6 +101,8 @@ class Post {
 
         let commentButton = html.children[html.children.length-1].children[1].children[0];
         commentButton.addEventListener("click", Home.comment.bind(null), { once:true });
+		
+		Home.setReaction(html,this.reacted);
 
         return html;
     }
