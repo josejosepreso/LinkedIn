@@ -33,7 +33,7 @@
                   </a>
                 </li>
                 <li class="nav-li ">
-                  <a class="d-flex align-items-center flex-column" href="#">
+                  <a class="d-flex align-items-center flex-column" href="messages.jsp">
                     <svg class="nav-svg" stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="M256 32C114.6 32 0 125.1 0 240c0 49.6 21.4 95 57 130.7C44.5 421.1 2.7 466 2.2 466.5c-2.2 2.3-2.8 5.7-1.5 8.7S4.8 480 8 480c66.3 0 116-31.8 140.6-51.4 32.7 12.3 69 19.4 107.4 19.4 141.4 0 256-93.1 256-208S397.4 32 256 32zM128 272c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32zm128 0c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32zm128 0c-17.7 0-32-14.3-32-32s14.3-32 32-32 32 14.3 32 32-14.3 32-32 32z"></path></svg>
                     <p class="small m-0">Mensajes</p>
                   </a>
@@ -43,7 +43,7 @@
 
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle d-flex align-items-center flex-column" href="#" role="button" data-bs-toggle="dropdown"  aria-haspopup="true" aria-expanded="false" id="navbarDropdown">
-                    <img id="nav-profile-photo" src="assets/img/profile1.png">
+                    <img id="nav-profile-photo" src="assets/img/<%=((User) session.getAttribute("user")).getImgPath()%>">
                     <div class="d-flex">
                       <p class="small m-0">Me</p>
                     </div>
@@ -86,7 +86,6 @@
                   <p class="small">0 conexiones</p>
                   <div id="userButtons">
                   	<a type="button" class="fw-bold px-3 btn btn-primary rounded-pill">+ Conectar</a>
-                  	<a style="border:1px solid #0d6efd;color:#0d6efd;" type="button" class="fw-bold px-3 btn bg-white rounded-pill">Mensaje</a>
                   </div>
                 </div>
               </div>

@@ -90,6 +90,13 @@ body#home, body#jobs, body#profile {
   width: 70px;
 }
 
+.conversation-profile-photo {
+
+  border-radius: 100px;
+  height: 50px;
+  width: 50px;
+}
+
 #middle-profile-photo {
 
   width: 50px;

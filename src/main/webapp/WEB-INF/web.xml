@@ -89,4 +89,24 @@
     <servlet-name>CreatePost</servlet-name>
     <url-pattern>/controllers/create/post</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GetConnections</display-name>
+    <servlet-name>GetConnections</servlet-name>
+    <servlet-class>programLibraries.controllers.GetConnections</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetConnections</servlet-name>
+    <url-pattern>/controllers/get/connections</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>GetConversation</display-name>
+    <servlet-name>GetConversation</servlet-name>
+    <servlet-class>programLibraries.controllers.GetConversation</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>GetConversation</servlet-name>
+    <url-pattern>/controllers/get/conversation</url-pattern>
+  </servlet-mapping>
 </web-app>

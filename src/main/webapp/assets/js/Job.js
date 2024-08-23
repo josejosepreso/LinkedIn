@@ -69,29 +69,3 @@ class Job {
 }
 
 Job.read();
-
-let jobs = document.querySelector("main#jobs");
-
-let jobList = {
-
-	1:{
-
-		title:"Java Developer",
-		description:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-		img:"assets/img/posts/1.png"
-	},
-	2:{
-
-		title:"Photographer",
-		description:"Lorem iipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Dpsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-		img:"assets/img/posts/1.png"
-	},
-	3:{
-		title:"Graphic Designer",
-		description:"Lorem ipsum dolor sit amet, consectetur adipiscing",
-		img:"assets/img/posts/1.png"
-	}
-
-};
-
-
