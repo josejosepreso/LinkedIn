@@ -20,7 +20,7 @@ class Home {
 				const userPhoto = document.querySelector("div#myData").getAttribute("data-user-picture");
 				const userName = document.querySelector("div#myData").getAttribute("data-user-name");
 				const userId = document.querySelector("div#myData").getAttribute("data-user-id");
-		        let post = new Post(obj.content.CODIGO_PUBLICACION, new User(userId, userName, userPhoto), textArea.value, undefined, 0, 0,date);
+		        let post = new Post(obj.content.CODIGO_PUBLICACION, new User(userId, userName, userPhoto), textArea.value, undefined, 0, 0,date,"null");
 		
 		        textArea.value = "";
 		
@@ -48,6 +48,37 @@ class Home {
 		xhr.addEventListener("readystatechange", Home.processPostResponse.bind(xhr,textArea,now));
 		xhr.send(`content=${textArea.value}&date=${now}`);
 	}
+	
+	static postCommentProcessResponse(input, post) {
+		
+		if(this.readyState == 4) {
+							
+			if(this.status == 200) {
+				
+				if(JSON.parse(this.responseText).status) {
+					
+					let userPicture = document.querySelector("div#myData").getAttribute("data-user-picture");
+					let name = document.querySelector("div#myData").getAttribute("data-user-name");
+									
+					// console.log(name);
+		
+					let comment = new Comment(null, null, name, userPicture, input.value);
+		
+					post.insertBefore(comment.getHTML(), post.children[5]);
+		
+					input.value = "";
+				}
+			}
+		}
+	}
+	
+	static postComment(content, post) {
+		const xhr = new XMLHttpRequest();
+		xhr.open("POST", "controllers/post/comment", true);
+		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		xhr.addEventListener("readystatechange", Home.postCommentProcessResponse.bind(xhr, content, post));
+		xhr.send(`content=${content.value}&post=${post.id.replace('post-','')}`);
+	}
 
     static comment(e) {
 
@@ -71,7 +102,10 @@ class Home {
         html.appendChild(img);
         html.appendChild(input);
         html.appendChild(button);
+		
+		button.addEventListener("click", Home.postComment.bind(null, input, post));
 
+		/*
 		button.addEventListener("click", () => {
 	
 			if(input.value != ""){
@@ -80,13 +114,14 @@ class Home {
 				
 				// console.log(name);
 	
-				let comment = new Comment(name, userPicture, input.value);
+				let comment = new Comment(null, null, name, userPicture, input.value);
 	
 				post.insertBefore(comment.getHTML(), post.children[5]);
 	
 				input.value = "";
 			}
 		});
+		*/
 		
 		post.appendChild(html);
 		
@@ -139,37 +174,52 @@ class Home {
 		}
 	}
 	
-	static setReaction(post, reaction) {
+	static setReaction(button, reaction) {
 		
 		if(reaction === "null") return;
 		
+		button.style.color = "#0d6efd";
+		if(button.innerText === "Celebrar") button.style.color = "#198754";
+        else if(button.innerText === "Apoyar") button.style.color = "#6f42c1";
+        else if(button.innerText === "Encantar") button.style.color = "#dc3545";
+        else if(button.innerText === "Interesar") button.style.color = "#ffc107";
+        else if(button.innerText === "Hacer gracia") button.style.color = "#0dcaf0";
+	}
+	
+	static loadReaction(post, reaction) {
+		
 		const a = post.children[post.children.length-1].children[0].children[0];
 		
-		if(a.innerText === "Celebrar") a.style.color = "#198754";
-        else if(a.innerText === "Apoyar") a.style.color = "#6f42c1";
-        else if(a.innerText === "Encantar") a.style.color = "#dc3545";
-        else if(a.innerText === "Interesar") a.style.color = "#ffc107";
-        else if(a.innerText === "Hacer gracia") a.style.color = "#0dcaf0";
+		Home.setReaction(a, reaction);
+	}
+	
+	static processReactResponse(reactButton, target) {
+		
+		if(this.readyState == 4) {
+							
+			if(this.status == 200) {
+				
+				const obj = JSON.parse(this.responseText);
+				
+				if(obj.status) {
+					Home.setReaction(reactButton, target);
+				}
+			}
+		}
 	}
 
 
     static react(e) {
-
-        // console.log(e.target);
-
-        // let post = document.querySelector(`div#${e.target.parentElement.parentElement.parentElement.parentElement.id}`);
+		
+		let post = e.target.parentElement.parentElement.parentElement.parentElement.id;
         let reactButton = e.target.parentElement.previousElementSibling;
-
-        // console.log(e.target.innerText);
-
         reactButton.innerText = `${e.target.innerText}`;
-
-        reactButton.style.color = "#0d6efd";
-        if(e.target.innerText === "Celebrar") reactButton.style.color = "#198754";
-        else if(e.target.innerText === "Apoyar") reactButton.style.color = "#6f42c1";
-        else if(e.target.innerText === "Encantar") reactButton.style.color = "#dc3545";
-        else if(e.target.innerText === "Interesar") reactButton.style.color = "#ffc107";
-        else if(e.target.innerText === "Hacer gracia") reactButton.style.color = "#0dcaf0";
+		
+		const xhr = new XMLHttpRequest();
+		xhr.open("POST", "controllers/set/reaction", true);
+		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		xhr.addEventListener("readystatechange", Home.processReactResponse.bind(xhr, reactButton, e.target));
+		xhr.send(`postId=${post.replace('post-','')}&reaction=${e.target.innerText}`);
     }
 
 
@@ -192,7 +242,7 @@ class Home {
 				
 				const posts = obj.content.posts;
 				
-				// console.log(obj);
+				console.log(obj);
 				
 				if(obj.status) {
 					
@@ -259,13 +309,7 @@ class Home {
 			          ${name}
 			        </span>
 			      </a>
-			
 			      <p class="mb-2 small">${description}</p>
-			
-			      <button class="p-1 bg-white suggestions-buttons">
-			        Seguir
-			      </button>
-			
 			    </div>
 			  </div>`;
 						

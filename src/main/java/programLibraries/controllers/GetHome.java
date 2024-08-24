@@ -57,6 +57,7 @@ public class GetHome extends HttpServlet {
 					+ "AND E.CODIGO_PUBLICACION = A.CODIGO_PUBLICACION\r\n"
 					+ "AND A.CODIGO_PUBLICACION = F.CODIGO_PUBLICACION (+)\r\n"
 					+ "AND F.CODIGO_REACCION = G.CODIGO_REACCION (+)\r\n"
+					+ "AND F.CODIGO_USUARIO (+) = ?\r\n"
 					+ "ORDER BY FECHA_PUBLICACION DESC";
 
 			// Obtener puesto laboral actual en pagina de inicio
@@ -97,6 +98,7 @@ public class GetHome extends HttpServlet {
 				
 				ps.setInt(1, (int) ((User) user).getId());
 				ps.setInt(2, (int) ((User) user).getId());
+				ps.setInt(3, (int) ((User) user).getId());
 				
 				ResultSet rs = ps.executeQuery();
 				

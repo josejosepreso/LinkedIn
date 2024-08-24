@@ -40,7 +40,8 @@ public class GetJobs extends HttpServlet {
 		webResponse.setContent("Error obteniendo ofertas laborales.");
 		
 		String query =
-				"SELECT  A.TITULO,\r\n"
+				"SELECT    A.CODIGO_OFERTA_LABORAL,\r\n"
+				+ "		   A.TITULO,\r\n"
 				+ "        B.NOMBRE AS EMPRESA,\r\n"
 				+ "        C.NOMBRE_MODALIDAD AS MODALIDAD,\r\n"
 				+ "        D.NOMBRE_LUGAR || ', ' || E.NOMBRE_LUGAR || ' · ' || A.FECHA_PUBLICACION || ' · ' || F.APLICACIONES AS INFORMACION,\r\n"
@@ -77,6 +78,11 @@ public class GetJobs extends HttpServlet {
 				json.append(String.format("\"%s\"", i++));
 				json.append(":");
 				json.append("{");
+				
+				json.append("\"CODIGO_OFERTA_LABORAL\"");
+				json.append(":");
+				json.append(String.format("\"%s\"", rs.getString("CODIGO_OFERTA_LABORAL")));
+				json.append(",");
 				
 				json.append("\"TITULO\"");
 				json.append(":");

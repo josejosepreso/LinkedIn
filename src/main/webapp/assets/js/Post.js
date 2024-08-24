@@ -76,7 +76,7 @@ class Post {
 
                 <div class="d-flex align-items-center">
                   <p class="m-0 small-font-size">
-                    ${this.reactions} Reacciones
+                    <span id="reactionsAmount">${this.reactions}</span> Reacciones
                   </p>
                 </div>
 
@@ -102,7 +102,7 @@ class Post {
         let commentButton = html.children[html.children.length-1].children[1].children[0];
         commentButton.addEventListener("click", Home.comment.bind(null), { once:true });
 		
-		Home.setReaction(html,this.reacted);
+		Home.loadReaction(html,this.reacted);
 
         return html;
     }

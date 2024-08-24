@@ -90,6 +90,9 @@ public class GetUser extends HttpServlet {
 					+ "AND C.CODIGO_HABILIDAD = A.CODIGO_HABILIDAD\r\n"
 					+ "AND A.CODIGO_USUARIO = ?";
 			
+			// 
+			String query5 = "SELECT 1 FROM TBL_SEGUIDORES WHERE CODIGO_USUARIO_SEGUIDOR = ? AND CODIGO_USUARIO_SIGUIENDO = ?";
+			
 			int id = Integer.parseInt(request.getParameter("id"));
 			
 			try {
@@ -291,6 +294,19 @@ public class GetUser extends HttpServlet {
 				}
 				
 				json.append("}");
+				json.append(",");
+				
+				// 
+				ps = connection.prepareStatement(query5,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
+				ps.setInt(1, ((User) request.getSession().getAttribute("user")).getId());
+				ps.setInt(2, id);
+				rs = ps.executeQuery();
+				
+				json.append("\"SIGUIENDO\"");
+				json.append(":");
+				
+				if(rs.next()) json.append("1");
+				else json.append("0");
 				
 				json.append("}");
 				

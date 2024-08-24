@@ -66,27 +66,30 @@
 	    		<a href="" class="fw-bold h4 fw-bold mx-3" id="userName"></a>
 	    	</div>
 	    	
-	    	<div style="height:58vh;overflow-y:scroll" class="form-control my-2 p-4">
+	    	<div id="messages" style="height:58vh;overflow-y:scroll" class="form-control my-2 p-4">
 	    	
-	    		<div class="d-flex justify-content-start my-2">
-	    			<span class="text-white rounded-3 small p-2" style="background-color:black">AAA</span>
-	    		</div>
 	    		
-	    		<div class="d-flex justify-content-start my-2">
-	    			<span class="text-white rounded-3 small p-2" style="background-color:black">JAJASJDSKJA</span>
-	    		</div>
 	    		
 	    		
 	    	</div>
 	    	
 	    	<div style="height:10vh;" class="form-control mt-2 d-flex align-items-center">
-	    		<input class="form-control mx-3" placeholder="Mensaje">
-	    		<a class="btn bg-black text-white">Enviar</a>
+	    		<input id="message" class="form-control mx-3" placeholder="Mensaje">
+	    		<a id="sendButton" class="btn bg-black text-white">Enviar</a>
 	    	</div>
 	    	
 	    </div>
 	    
+	    <div id="myData" style="display:none;" data-user-picture="<%=((User) session.getAttribute("user")).getImgPath()%>" data-user-name="<%=((User) session.getAttribute("user")).getFullName()%>" data-user-id="<%=((User) session.getAttribute("user")).getId()%>"></div>
+	    
+	    
 	    <script src="assets/js/bootstrap.bundle.min.js"></script>
 	    <script src="assets/js/Conversation.js"></script>
+	    <script>
+	    	let sender = <%=((User) session.getAttribute("user")).getId()%>;
+	    	let receiver = window.location.search.replace("?id=", "");
+	    	let message = document.querySelector("input#message");
+	    	document.querySelector("a#sendButton").addEventListener("click", Conversation.send.bind(null, sender,receiver,message));
+	    </script>
 	</body>
 </html>

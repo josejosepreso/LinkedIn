@@ -48,6 +48,8 @@ class Register {
 				}
 				
 				answer.innerHTML = `${obj.content}`;
+				
+				if(obj.status) window.location.replace("http://localhost:8080/LinkedIn/login.jsp");
 			}
 		}
 	}

@@ -122,29 +122,15 @@
         <div class="col-12 col-lg-6 middle col-xl-6 row d-flex justify-content-center p-1 pt-0 m-0 pe-lg-4">
           <div class="max-width p-0">
 
-            <div class="bg-white mt-1 mt-lg-0 px-3 py-2 start-a-post">
-              <div class="d-flex align-items-center mb-2">
+            <div class="bg-white mt-1 px-3 py-2 start-a-post">
+              <div class="d-flex align-items-center">
                 <img class="me-3" id="middle-profile-photo" src="assets/img/<%=((User) session.getAttribute("user")).getImgPath()%>" alt="profile photo">
 
                 <a id="createPost" style="border-radius:30px;cursor:pointer;" class="form-control p-2 ps-3 fw-bold">Crear publicacion</a>
 
               </div>
 
-              <div class="buttons-div d-flex justify-content-start">
-                <button class="four-buttons p-2 d-flex align-items-center">
-                  <svg class="me-2" stroke="currentColor" fill="#378FE9" stroke-width="0" viewBox="0 0 24 24" height="1.6em" width="1.6em" xmlns="http://www.w3.org/2000/svg"><circle cx="7.499" cy="9.5" r="1.5"></circle><path d="M10.499 14L8.999 12 5.999 16 8.999 16 11.999 16 17.999 16 13.499 10z"></path><path d="M19.999,4h-16c-1.103,0-2,0.897-2,2v12c0,1.103,0.897,2,2,2h16c1.103,0,2-0.897,2-2V6C21.999,4.897,21.102,4,19.999,4z M3.999,18V6h16l0.002,12H3.999z"></path></svg>
-                  <span>
-                    Foto
-                  </span>
-                </button>
-                <button class="four-buttons p-2 d-flex align-items-center mx-3">
-                  <svg class="me-2" stroke="currentColor" fill="#A872E8" stroke-width="0" viewBox="0 0 448 512" height="1.2em" width="1.3em" xmlns="http://www.w3.org/2000/svg"><path d="M352 160v-32C352 57.42 294.579 0 224 0 153.42 0 96 57.42 96 128v32H0v272c0 44.183 35.817 80 80 80h288c44.183 0 80-35.817 80-80V160h-96zm-192-32c0-35.29 28.71-64 64-64s64 28.71 64 64v32H160v-32zm160 120c-13.255 0-24-10.745-24-24s10.745-24 24-24 24 10.745 24 24-10.745 24-24 24zm-192 0c-13.255 0-24-10.745-24-24s10.745-24 24-24 24 10.745 24 24-10.745 24-24 24z"></path></svg>
-                  <span>
-                    Oferta Laboral
-                  </span>
-                </button>
-
-              </div>
+              
             </div>
 
 

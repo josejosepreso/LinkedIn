@@ -50,14 +50,16 @@ public class GetConversation extends HttpServlet {
 				+ "        A.USUARIO_RECEPTOR AS CODIGO_USUARIO_RECEPTOR,\r\n"
 				+ "        C.NOMBRE || ' ' || C.APELLIDO AS NOMBRE_USUARIO_EMISOR,\r\n"
 				+ "        C.NOMBRE_FOTO_PERFIL,\r\n"
-				+ "        A.CONTENIDO\r\n"
+				+ "        A.CONTENIDO,\r\n"
+				+ "		   A.FECHA\r\n"
 				+ "FROM TBL_MENSAJES_PRIVADOS A\r\n"
 				+ "INNER JOIN TBL_USUARIOS B\r\n"
 				+ "ON (A.USUARIO_EMISOR = B.CODIGO_USUARIO)\r\n"
 				+ "INNER JOIN TBL_USUARIOS C\r\n"
 				+ "ON (A.USUARIO_RECEPTOR = C.CODIGO_USUARIO)\r\n"
 				+ "WHERE A.USUARIO_EMISOR IN (?,?)\r\n"
-				+ "AND A.USUARIO_RECEPTOR IN (?,?)";
+				+ "AND A.USUARIO_RECEPTOR IN (?,?)\r\n"
+				+ "ORDER BY A.FECHA";
 			
 			try {
 				
@@ -110,6 +112,11 @@ public class GetConversation extends HttpServlet {
 					json.append("\"MENSAJE\"");
 					json.append(":");
 					json.append(String.format("\"%s\"", rs.getString(7)));
+					json.append(",");
+					
+					json.append("\"FECHA\"");
+					json.append(":");
+					json.append(String.format("\"%s\"", rs.getDate(8)));
 					
 					json.append("}");
 					

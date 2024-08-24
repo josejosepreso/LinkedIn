@@ -5,7 +5,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import programLibraries.Configuration;
 import programLibraries.User;
 import programLibraries.WebResponse;
@@ -15,17 +14,18 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLIntegrityConstraintViolationException;
 
 /**
- * Servlet implementation class CreatePost
+ * Servlet implementation class SetReaction
  */
-public class CreatePost extends HttpServlet {
+public class SetReaction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CreatePost() {
+    public SetReaction() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -39,42 +39,61 @@ public class CreatePost extends HttpServlet {
 		
 		WebResponse webResponse = new WebResponse();
 		webResponse.setStatus(false);
-		webResponse.setContent("Error creando publicacion.");
+		webResponse.setContent("Error reaccionando.");
 		
-		if(request.getParameter("content") != "") {
+		if(request.getParameter("postId") != null && request.getParameter("reaction") != null) {
 			
-			String query = "INSERT INTO TBL_PUBLICACIONES (CODIGO_PUBLICACION,CODIGO_USUARIO,CONTENIDO,FECHA_PUBLICACION,FOTO) VALUES (SQ_CODIGO_PUBLICACION.NEXTVAL,?,?,SYSDATE,?)";
+			int postId = Integer.parseInt(request.getParameter("postId"));
+			String reaction = request.getParameter("reaction");
+			
+			String query;
 			
 			try {
+				
 				Connection connection = DriverManager.getConnection(Configuration.DATABASE_URL,Configuration.DATABASE_USERNAME,Configuration.DATABASE_PASSWORD);
 				
-				PreparedStatement ps = connection.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
+				// 
+				query = "DELETE FROM TBL_REACCIONES_POR_PUBLICACION WHERE CODIGO_PUBLICACION = ? AND CODIGO_USUARIO = ?";
 				
-				HttpSession session = request.getSession();
-				User user = (User) session.getAttribute("user");
+				PreparedStatement ps = connection.prepareStatement(query);
 				
-				ps.setInt(1, (int) ((User) user).getId());
-				ps.setString(2, request.getParameter("content").trim());
-				ps.setString(3, null);
+				ps.setInt(1, postId);
+				ps.setInt(2, ((User) request.getSession().getAttribute("user")).getId());
+				
+				ps.executeQuery();
+				
+				
+				
+				// 
+				query = "SELECT CODIGO_REACCION FROM TBL_REACCIONES WHERE NOMBRE_REACCION = ?";
+				
+				ps = connection.prepareStatement(query);
+				
+				ps.setString(1, reaction.trim());
 				
 				ResultSet rs = ps.executeQuery();
 				
-				ps = connection.prepareStatement("SELECT MAX(CODIGO_PUBLICACION) AS CODIGO_PUBLICACION FROM TBL_PUBLICACIONES");
-				rs = ps.executeQuery();
+				rs.next();
 				
-				StringBuilder json = new StringBuilder("{");
+				int reactionId = rs.getInt(1);
 				
-				if(rs.next()) {
-					
-					json.append("\"CODIGO_PUBLICACION\"");
-					json.append(":");
-					json.append(String.format("\"%s\"", rs.getInt("CODIGO_PUBLICACION")));
-				}
+				//
+				query =
+						"INSERT INTO TBL_REACCIONES_POR_PUBLICACION (CODIGO_PUBLICACION,CODIGO_USUARIO,CODIGO_REACCION,FECHA)\r\n"
+						+ "VALUES (?,?,?,SYSDATE)";
 				
-				json.append("}");
 				
-				response.getWriter().append(String.format("{\"status\":\"true\",\"content\":%s}", json.toString()));
-				return;
+				
+				ps = connection.prepareStatement(query);
+				ps.setInt(1, postId);
+				ps.setInt(2, ((User) request.getSession().getAttribute("user")).getId());
+				ps.setInt(3, reactionId);
+				
+				ps.executeQuery();
+				
+				webResponse.setStatus(true);
+				webResponse.setContent("Reaccionado con exito.");
+				
 			} catch(Exception e) {
 				
 				System.out.println(e);

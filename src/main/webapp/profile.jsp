@@ -4,6 +4,8 @@
 <%
 	if(session.getAttribute("user") == null) response.sendRedirect("http://localhost:8080/LinkedIn/index.jsp");
 %>
+<%@ page import="programLibraries.Configuration" %>
+<%@ page import="java.sql.*" %>
 <!DOCTYPE html>
 <html>
   <head>
@@ -83,9 +85,9 @@
                   	<a id="contactInfo" style="cursor:pointer;" class="text-primary fw-bold mx-1">Informacion de contacto</a>
                   </div>
                   
-                  <p class="small">0 conexiones</p>
                   <div id="userButtons">
-                  	<a type="button" class="fw-bold px-3 btn btn-primary rounded-pill">+ Conectar</a>
+                  	<a type="Button" id="connectButton" class="fw-bold px-3 btn btn-primary rounded-pill">+ Conectar</a>
+                  	<a type="Button" id="followButton" class="fw-bold px-3 btn btn-primary rounded-pill">+ Seguir</a>
                   </div>
                 </div>
               </div>
@@ -121,11 +123,420 @@
 				</div>
 			</div>
 		</div>
+		
+		
+		
+		
+		
+		
+		
+		
+		<%
+			String query = "SELECT CODIGO_EMPRESA,NOMBRE FROM TBL_EMPRESAS";
+		
+			StringBuilder companies = new StringBuilder("{");
+			
+			try {
+				Connection connection = DriverManager.getConnection(Configuration.DATABASE_URL,Configuration.DATABASE_USERNAME,Configuration.DATABASE_PASSWORD);
+          		
+				PreparedStatement ps = connection.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
+				
+          		ResultSet rs = ps.executeQuery();
+          		
+          		int i = 0;
+          		
+          		while(rs.next()) {
+          			
+          			companies.append(String.format("\"%s\"", ++i));
+          			companies.append(":");
+          			companies.append("{");
+          			
+          			companies.append("\"CODIGO_EMPRESA\"");
+          			companies.append(":");
+          			companies.append(String.format("\"%s\"", rs.getInt(1)));
+          			companies.append(",");
+          			
+          			companies.append("\"NOMBRE\"");
+          			companies.append(":");
+          			companies.append(String.format("\"%s\"", rs.getString(2)));
+          			
+          			companies.append("}");
+          			if(!rs.isLast()) companies.append(",");
+          		}
+          		companies.append("}");
+          	} catch(Exception e) {
+          		
+          		System.out.println(e);
+          	}
+		%>
+		<div class="fs-6 modal modal fade" id="addUserExperienceModal" tabindex="-1" aria-hidden="true">
+	  	<div class="modal-dialog">
+	  		<div class="modal-content">
+	  			<div class="modal-header">
+	  				<h1 id="userNameModal" class="modal-title fs-5 fw-bold">Agregar experiencia laboral</h1>
+        		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	  			</div>
+	  			<div class="modal-body">
+	  				<section class="mb-2">
+							<label for="">Puesto</label>
+					</section>
+					<section class="mb-4">
+						<input id="jobPosition" class="form-control" name="" type="text" value="" placeholder="Puesto de trabajo"/>
+					</section>
+	  			
+	  				<section class="mb-2">
+						<label for="">Empresa</label>
+					</section>
+					<section class="mb-4">
+						<select id="companies" class="form-select" aria-label="Default select example">
+							<option value="0" selected>Seleccionar empresa</option>
+						</select>
+					</section>
+					
+					<section class="mb-2">
+						<label for="">Fecha inicio</label>
+					</section>
+	  				<section class="mb-4">
+						<input class="form-control" id="experienceStartDate" type="date">
+					</section>
+					
+					<section class="mb-2">
+						<label for="">Fecha fin</label>
+					</section>
+	  				<section class="mb-4">
+						<input class="form-control" id="experienceEndDate" type="date">
+					</section>
+				</div>
+				<div class="modal-footer">
+        				<button id="sendExperienceButton" type="button" class="btn btn-primary">Agregar</button>
+				</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<%
+			query = "SELECT CODIGO_INSTITUCION,NOMBRE FROM TBL_INSTITUCIONES";
+		
+			StringBuilder schools = new StringBuilder("{");
+			
+			try {
+				Connection connection = DriverManager.getConnection(Configuration.DATABASE_URL,Configuration.DATABASE_USERNAME,Configuration.DATABASE_PASSWORD);
+          		
+				PreparedStatement ps = connection.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
+				
+          		ResultSet rs = ps.executeQuery();
+          		
+          		int i = 0;
+          		
+          		while(rs.next()) {
+          			
+          			schools.append(String.format("\"%s\"", ++i));
+          			schools.append(":");
+          			schools.append("{");
+          			
+          			schools.append("\"CODIGO_INSTITUCION\"");
+          			schools.append(":");
+          			schools.append(String.format("\"%s\"", rs.getInt(1)));
+          			schools.append(",");
+          			
+          			schools.append("\"NOMBRE\"");
+          			schools.append(":");
+          			schools.append(String.format("\"%s\"", rs.getString(2)));
+          			
+          			schools.append("}");
+          			if(!rs.isLast()) schools.append(",");
+          		}
+          		schools.append("}");
+          	} catch(Exception e) {
+          		
+          		System.out.println(e);
+          	}
+		%>
+		
+		<div class="fs-6 modal modal fade" id="addUserEducationModal" tabindex="-1" aria-hidden="true">
+	  	<div class="modal-dialog">
+	  		<div class="modal-content">
+	  			<div class="modal-header">
+	  				<h1 id="userNameModal" class="modal-title fs-5 fw-bold">Agregar educacion</h1>
+        		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	  			</div>
+	  			<div class="modal-body">
+	  				
+	  				<section class="mb-2">
+							<label for="">Titulo</label>
+					</section>
+					<section class="mb-4">
+						<input id="educationTitle" class="form-control" name="" type="text" value="" placeholder="Titulo"/>
+					</section>
+	  			
+	  				<section class="mb-2">
+						<label for="">Institucion</label>
+					</section>
+					<section class="mb-4">
+						<select id="educationSchools" class="form-select" aria-label="Default select example">
+							<option value="0" selected>Seleccionar institucion</option>
+						</select>
+					</section>
+					
+					<section class="mb-2">
+						<label for="">Fecha inicio</label>
+					</section>
+	  				<section class="mb-4">
+						<input class="form-control" id="educationStartDate" type="date">
+					</section>
+					
+					<section class="mb-2">
+						<label for="">Fecha fin</label>
+					</section>
+	  				<section class="mb-4">
+						<input class="form-control" id="educationEndDate" type="date">
+					</section>
+				</div>
+				<div class="modal-footer">
+        				<button id="sendEducationButton" type="button" class="btn btn-primary">Agregar</button>
+				</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		<%
+			query = "SELECT * FROM TBL_TIPOS_LOGROS";
+		
+			StringBuilder achievementTypes = new StringBuilder("{");
+			
+			try {
+				Connection connection = DriverManager.getConnection(Configuration.DATABASE_URL,Configuration.DATABASE_USERNAME,Configuration.DATABASE_PASSWORD);
+          		
+				PreparedStatement ps = connection.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
+				
+          		ResultSet rs = ps.executeQuery();
+          		
+          		int i = 0;
+          		
+          		while(rs.next()) {
+          			
+          			achievementTypes.append(String.format("\"%s\"", ++i));
+          			achievementTypes.append(":");
+          			achievementTypes.append("{");
+          			
+          			achievementTypes.append("\"CODIGO_TIPO_LOGRO\"");
+          			achievementTypes.append(":");
+          			achievementTypes.append(String.format("\"%s\"", rs.getInt(1)));
+          			achievementTypes.append(",");
+          			
+          			achievementTypes.append("\"NOMBRE\"");
+          			achievementTypes.append(":");
+          			achievementTypes.append(String.format("\"%s\"", rs.getString(2)));
+          			
+          			achievementTypes.append("}");
+          			if(!rs.isLast()) achievementTypes.append(",");
+          		}
+          		achievementTypes.append("}");
+          	} catch(Exception e) {
+          		
+          		System.out.println(e);
+          	}
+		%>
+		
+		<div class="fs-6 modal modal fade" id="addUserAchievementsModal" tabindex="-1" aria-hidden="true">
+	  	<div class="modal-dialog">
+	  		<div class="modal-content">
+	  			<div class="modal-header">
+	  				<h1 id="userNameModal" class="modal-title fs-5 fw-bold">Agregar logro</h1>
+        		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	  			</div>
+	  			<div class="modal-body">
+	  			
+	  				<section class="mb-2">
+							<label for="">Titulo</label>
+					</section>
+					<section class="mb-4">
+						<input id="achievementTitle" class="form-control" name="" type="text" value="" placeholder="Titulo"/>
+					</section>
+	  			
+	  				<section class="mb-2">
+						<label for="">Institucion</label>
+					</section>
+	  				<section class="mb-4">
+						<select id="achievementSchools" class="form-select" aria-label="Default select example">
+							<option value="0" selected>Seleccionar institucion</option>
+						</select>
+					</section>
+					
+					<section class="mb-2">
+						<label for="">Tipo de logro</label>
+					</section>
+	  				<section class="mb-4">
+						<select id="achievementTypes" class="form-select" aria-label="Default select example">
+							<option value="0" selected>Seleccionar tipo de logro</option>
+						</select>
+					</section>
+					
+					<section class="mb-2">
+						<label for="">Fecha de obtencion</label>
+					</section>
+	  				<section class="mb-4">
+						<input class="form-control" id="achievementDate" type="date">
+					</section>
+				</div>
+				<div class="modal-footer">
+        				<button id="sendAchievementButton" type="button" class="btn btn-primary">Agregar</button>
+				</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		
+		
+		
+		
+		
+		
+		<%
+			query =
+				"SELECT B.CODIGO_HABILIDAD,B.NOMBRE\r\n"
+				+ "FROM(\r\n"
+				+ "    SELECT CODIGO_HABILIDAD\r\n"
+				+ "    FROM TBL_HABILIDADES_POR_USUARIOS\r\n"
+				+ "    WHERE CODIGO_USUARIO = ?\r\n"
+				+ ") A\r\n"
+				+ "RIGHT JOIN TBL_HABILIDADES B\r\n"
+				+ "ON A.CODIGO_HABILIDAD = B.CODIGO_HABILIDAD\r\n"
+				+ "WHERE A.CODIGO_HABILIDAD IS NULL";
+		
+			StringBuilder result = new StringBuilder("{");
+			
+			try {
+				Connection connection = DriverManager.getConnection(Configuration.DATABASE_URL,Configuration.DATABASE_USERNAME,Configuration.DATABASE_PASSWORD);
+          		
+				PreparedStatement ps = connection.prepareStatement(query,ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);
+				
+				ps.setInt(1, ((User) request.getSession().getAttribute("user")).getId());
+				          		
+          		ResultSet rs = ps.executeQuery();
+          		
+          		int i = 0;
+          		
+          		while(rs.next()) {
+          			
+          			result.append(String.format("\"%s\"", ++i));
+          			result.append(":");
+          			result.append("{");
+          			
+          			result.append("\"CODIGO_HABILIDAD\"");
+          			result.append(":");
+          			result.append(String.format("\"%s\"", rs.getInt(1)));
+          			result.append(",");
+          			
+          			result.append("\"NOMBRE\"");
+          			result.append(":");
+          			result.append(String.format("\"%s\"", rs.getString(2)));
+          			
+          			result.append("}");
+          			if(!rs.isLast()) result.append(",");
+          		}
+          		result.append("}");
+          	} catch(Exception e) {
+          		
+          		System.out.println(e);
+          	}
+		%>
+		
+		<div class="fs-6 modal modal fade" id="addUserSkillsModal" tabindex="-1" aria-hidden="true">
+	  	<div class="modal-dialog">
+	  		<div class="modal-content">
+	  			<div class="modal-header">
+	  				<h1 id="userNameModal" class="modal-title fs-5 fw-bold">Agregar habilidad</h1>
+        		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	  			</div>
+	  			<div class="modal-body">
+	  				<section class="mb-4">
+						<select id="skills" class="form-select" aria-label="Default select example">
+							<option value="0" selected>Seleccionar habilidad</option>
+						</select>
+					</section>
+				</div>
+				<div class="modal-footer">
+        				<button id="sendSkillButton" type="button" class="btn btn-primary">Agregar</button>
+				</div>
+				</div>
+			</div>
+		</div>
+		
+		
 
 	<div id="myData" style="display:none;" data-user="<%=((User) session.getAttribute("user")).getId()%>"></div>
 
 
     <script src="assets/js/bootstrap.bundle.min.js"></script>
     <script src="assets/js/Profile.js"></script>
+    <script>
+    	document.querySelector("a#followButton").addEventListener("click", Profile.follow.bind(null));
+    	document.querySelector("a#connectButton").addEventListener("click", Profile.connect.bind(null));
+    	
+    	// Habilidades
+    	let skills = '<%=result%>';
+    	//
+    	let schools = '<%=schools%>';
+    	//
+    	let achievementTypes = '<%=achievementTypes%>';
+		//
+		let companies = '<%=companies%>';
+    	
+    	Profile.loadSkills(skills);
+    	Profile.loadSchools(schools);
+    	Profile.loadAchievementTypes(achievementTypes);
+    	Profile.loadCompanies(companies);
+    	
+    	//
+    	document.querySelector("button#sendSkillButton").addEventListener("click", Profile.addSkill.bind(null, document.querySelector("select#skills")));
+    	//
+    	document.querySelector("button#sendAchievementButton").
+    		addEventListener("click", Profile.addAchievement.bind(null,
+    				document.querySelector("input#achievementTitle"),
+    				document.querySelector("select#achievementSchools"),
+    				document.querySelector("select#achievementTypes"),
+    				document.querySelector("input#achievementDate")
+    			)
+    		);
+    	//
+    	document.querySelector("button#sendEducationButton").
+    		addEventListener("click", Profile.addEducation.bind(null,
+    				document.querySelector("input#educationTitle"),
+    				document.querySelector("select#educationSchools"),
+    				document.querySelector("input#educationStartDate"),
+    				document.querySelector("input#educationEndDate")
+    			)
+    		);
+    	//
+    	document.querySelector("button#sendExperienceButton").
+    		addEventListener("click", Profile.addExperience.bind(null,
+    				document.querySelector("input#jobPosition"),
+    				document.querySelector("select#companies"),
+    				document.querySelector("input#experienceStartDate"),
+    				document.querySelector("input#experienceEndDate")
+    			)
+    		);
+    </script>
   </body>
 </html>

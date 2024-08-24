@@ -37,11 +37,6 @@ class Profile {
 					document.querySelector("p#userEmail").innerHTML += `<em>${dto.content.INFORMACION_PERSONAL.CORREO}</em>`;
 					document.querySelector("p#userPhone").innerHTML += `<em>${dto.content.INFORMACION_PERSONAL.TELEFONO}</em>`;
 
-					if(`${window.location.search.replace("?id=", "")}` == document.querySelector("div#myData").getAttribute("data-user")) {
-						
-						document.querySelector("div#userButtons").remove();
-					}
-					
 					
 					//
 					const usrInfo = document.querySelector("div#userInformation");
@@ -72,7 +67,7 @@ class Profile {
 								</p>
 							`;
 						}
-						usrInfo.appendChild(Profile.section("Experiencia Laboral", userExperience));
+						usrInfo.appendChild(Profile.section("Experiencia Laboral", userExperience, "userExperience"));
 					}
 					
 					// Cargar informacion de educacion del usuario
@@ -92,7 +87,7 @@ class Profile {
 								</p>
 							`;
 						}
-						usrInfo.appendChild(Profile.section("Educacion", userEducation));
+						usrInfo.appendChild(Profile.section("Educacion", userEducation, "userEducation"));
 					}
 					
 					// Cargar informacion de logros
@@ -112,10 +107,10 @@ class Profile {
 								</p>
 							`;
 						}
-						usrInfo.appendChild(Profile.section("Logros", userAchievements));
+						usrInfo.appendChild(Profile.section("Logros", userAchievements, "userAchievements"));
 					}
 					
-					// Cargar informacion de logros
+					// Cargar informacion de habilidades
 					const skills = dto.content.HABILIDADES;
 					if(skills) {
 						
@@ -130,13 +125,58 @@ class Profile {
 								</p>
 							`;
 						}
-						usrInfo.appendChild(Profile.section("Habilidades", userSkills));
+						usrInfo.appendChild(Profile.section("Habilidades", userSkills, "userSkills"));
 					}
 					
+					// 
+					if(parseInt(dto.content.SIGUIENDO)) {
+						
+						const followButton = document.querySelector("a#followButton");
+						followButton.innerText = "✓ Siguiendo";
+						followButton.classList.remove("btn-primary");
+						followButton.classList.add("bg-black", "text-white");
+					}
 					
-					
-					
-					
+					//
+					if(`${window.location.search.replace("?id=", "")}` == document.querySelector("div#myData").getAttribute("data-user")) {
+											
+						document.querySelector("div#userButtons").remove();
+						
+						
+						const btn = document.createElement("a");
+						btn.innerText = "Agregar";
+						btn.classList.add("btn","btn-primary","text-white");
+						
+						btn.id = "addUserExperience";
+						document.querySelector("div#userExperience").appendChild(btn.cloneNode(true));
+						
+						btn.id = "addUserEducation";
+						document.querySelector("div#userEducation").appendChild(btn.cloneNode(true));
+						
+						btn.id = "addUserAchievements";
+						document.querySelector("div#userAchievements").appendChild(btn.cloneNode(true));
+						
+						btn.id = "addUserSkills";
+						document.querySelector("div#userSkills").appendChild(btn.cloneNode(true));
+						
+						// Eventos
+						document.querySelector("a#addUserExperience").addEventListener("click", e => {
+							let modal = new bootstrap.Modal(document.querySelector(`div#${e.target.id}Modal`));
+							modal.show();
+						});
+						document.querySelector("a#addUserEducation").addEventListener("click", e => {
+							let modal = new bootstrap.Modal(document.querySelector(`div#${e.target.id}Modal`));
+							modal.show();
+						});
+						document.querySelector("a#addUserAchievements").addEventListener("click", e => {
+							let modal = new bootstrap.Modal(document.querySelector(`div#${e.target.id}Modal`));
+							modal.show();
+						});
+						document.querySelector("a#addUserSkills").addEventListener("click", e => {
+							let modal = new bootstrap.Modal(document.querySelector(`div#${e.target.id}Modal`));
+							modal.show();
+						});
+					}
 					
 				} else {
 					
@@ -147,9 +187,10 @@ class Profile {
 		}
 	}
 	
-	static section(title, info) {
+	static section(title, info, id) {
 
 		let html = document.createElement("div");
+		html.id = id;
 		html.classList.add("mt-3", "max-width", "p-4", "bg-white");
 		html.style.borderRadius = "10px";
 
@@ -163,6 +204,162 @@ class Profile {
 		return html;
 	}
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	static connect() {
+		const xhr = new XMLHttpRequest();
+		xhr.open("POST", "controllers/connect", true);
+		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		xhr.addEventListener("readystatechange", Profile.processConnectResponse.bind(xhr));
+		xhr.send(`${window.location.search.replace("?", "")}`);
+	}
+	
+	static processConnectResponse() {
+		if(this.readyState == 4) {
+					
+			if(this.status == 200) {
+				
+			}
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	static follow() {
+		const xhr = new XMLHttpRequest();
+		xhr.open("POST", "controllers/follow", true);
+		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		xhr.addEventListener("readystatechange", Profile.processFollowResponse.bind(xhr));
+		xhr.send(`${window.location.search.replace("?", "")}`);
+	}
+	
+	static processFollowResponse() {
+		
+		if(this.readyState == 4) {
+					
+			if(this.status == 200) {
+				
+				if(JSON.parse(this.responseText)){
+					
+					const followButton = document.querySelector("a#followButton");
+					followButton.innerText = "✓ Siguiendo";
+					followButton.classList.remove("btn-primary");
+					followButton.classList.add("bg-black", "text-white");
+				}
+			}
+		}
+	}
+	
+	
+	static addExperience(jobPosition, company, startDate, endDate) {
+		const xhr = new XMLHttpRequest();
+		xhr.open("POST", "controllers/addexperience", true);
+		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		xhr.addEventListener("readystatechange", Profile.processUpdateUserResponse.bind(xhr));
+		xhr.send(`jobPosition=${jobPosition.value}&company=${company.value}&startDate=${startDate.value}&endDate=${endDate.value}`);
+	}
+	
+	static addAchievement(title, school, type, date) {
+		const xhr = new XMLHttpRequest();
+		xhr.open("POST", "controllers/addachievement", true);
+		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		xhr.addEventListener("readystatechange", Profile.processUpdateUserResponse.bind(xhr));
+		xhr.send(`title=${title.value}&school=${school.value}&type=${type.value}&date=${date.value}`);
+	}
+	
+	
+	static addSkill(skill) {
+		const xhr = new XMLHttpRequest();
+		xhr.open("POST", "controllers/addskill", true);
+		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		xhr.addEventListener("readystatechange", Profile.processUpdateUserResponse.bind(xhr));
+		xhr.send(`id=${skill.value}`);
+	}
+	
+	static addEducation(title, school, startDate, endDate) {
+		const xhr = new XMLHttpRequest();
+		xhr.open("POST", "controllers/addeducation", true);
+		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		xhr.addEventListener("readystatechange", Profile.processUpdateUserResponse.bind(xhr));
+		xhr.send(`title=${title.value}&school=${school.value}&startDate=${startDate.value}&endDate=${endDate.value}`);
+	}
+	
+	static processUpdateUserResponse() {
+		if(this.readyState == 4) {
+							
+			if(this.status == 200) {
+				
+				if(JSON.parse(this.responseText).status){
+					
+					document.querySelector("select#skills").value = "0";
+					
+					location.reload();
+				}
+			}
+		}
+	}
+	
+	
+	
+	static loadCompanies(companies) {
+		
+		let obj = JSON.parse(companies);
+		
+		const selectCompanies = document.querySelector("select#companies");
+				
+		Object.keys(obj).forEach((i) => {
+					
+			selectCompanies.innerHTML += `<option value="${obj[i].CODIGO_EMPRESA}">${obj[i].NOMBRE}</option>`;
+		});
+	}
+	
+	static loadSkills(skills) {
+		
+		let obj = JSON.parse(skills);
+		
+		const selectSkill = document.querySelector("select#skills");
+		
+		Object.keys(obj).forEach((i) => {
+					
+			selectSkill.innerHTML += `<option value="${obj[i].CODIGO_HABILIDAD}">${obj[i].NOMBRE}</option>`;
+		});
+	}
+	
+	static loadSchools(schools) {
+			
+		let obj = JSON.parse(schools);
+		
+		const selectAchievementSchool = document.querySelector("select#achievementSchools");
+		const selectEducationSchool = document.querySelector("select#educationSchools");
+		
+		Object.keys(obj).forEach((i) => {
+					
+			selectAchievementSchool.innerHTML += `<option value="${obj[i].CODIGO_INSTITUCION}">${obj[i].NOMBRE}</option>`;
+			selectEducationSchool.innerHTML += `<option value="${obj[i].CODIGO_INSTITUCION}">${obj[i].NOMBRE}</option>`;
+		});
+	}
+	
+	static loadAchievementTypes(achievementTypes) {
+				
+		let obj = JSON.parse(achievementTypes);
+		
+		const selectAchievementTypes = document.querySelector("select#achievementTypes");
+		
+		Object.keys(obj).forEach((i) => {
+					
+			selectAchievementTypes.innerHTML += `<option value="${obj[i].CODIGO_TIPO_LOGRO}">${obj[i].NOMBRE}</option>`;
+		});
+	}
 	
 }
 
